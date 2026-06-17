@@ -49,8 +49,6 @@ The following behaviors are strictly prohibited:
 
 ## 5. Intellectual Property Protection
 
-All contributors must respect the proprietary nature of Vexel Innovations software.
-
 - All source code remains the exclusive property of Vexel Innovations
 - Contributions do not grant ownership rights
 - Unauthorized reuse or redistribution is prohibited
@@ -59,30 +57,29 @@ All contributors must respect the proprietary nature of Vexel Innovations softwa
 
 ## 6. Reporting Violations
 
-If you observe behavior that violates this Code of Conduct, report it immediately.
+If you observe behavior that violates this Code of Conduct, report it immediately:
 
-📧 Contact:
-usamaado36@gmail.com
+**Email:** usamaado36@gmail.com
 
-Please include:
+Include:
 - Description of the incident
-- Relevant timestamps or evidence
-- Any supporting context
+- Relevant evidence or context
+- Time of occurrence (if possible)
 
-All reports will be reviewed confidentially.
+All reports will be handled confidentially.
 
 ---
 
 ## 7. Enforcement
 
-Violations of this Code of Conduct may result in:
+Violations may result in:
 
-- Warning or formal notice
+- Warning
 - Temporary suspension of access
 - Permanent removal from the project
-- Legal action in severe cases involving intellectual property theft or malicious activity
+- Legal action in serious cases
 
-All enforcement decisions are made at the discretion of Vexel Innovations leadership.
+Enforcement decisions are made by project maintainers.
 
 ---
 
@@ -90,15 +87,13 @@ All enforcement decisions are made at the discretion of Vexel Innovations leader
 
 This Code of Conduct applies to:
 
-- All repositories owned by Vexel Innovations
-- Internal communication channels
+- All repositories under Vexel Innovations
 - Issue trackers, pull requests, and discussions
-- Any interaction representing the organization publicly or privately
+- Internal and external communication channels
+- Any representation of the organization
 
 ---
 
 ## 9. Acknowledgment
 
-By accessing or contributing to this project, you agree to comply with this Code of Conduct.
-
-Failure to comply may result in loss of access and other actions deemed necessary.
+By using or contributing to this project, you agree to follow this Code of Conduct.
