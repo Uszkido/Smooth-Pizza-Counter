@@ -14,13 +14,21 @@
 
 ---
 
+## Demo
+
+▶️ [Watch the live detection demo](docs/images/pizza.mp4)
+
+---
+
 ## Screenshots
 
 | Login | Live Detection |
 |-------|----------------|
 | ![Login Page](docs/images/login.png) | ![Live Detection](docs/images/live_detection.png) |
 
-![Detection Detail](docs/images/detection_detail.png)
+| Detection Detail | System Overview |
+|-----------------|-----------------|
+| ![Detection Detail](docs/images/detection_detail.png) | ![System Overview](docs/images/sys.png) |
 
 ---
 
