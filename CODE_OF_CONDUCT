@@ -1,99 +1,31 @@
 # Code of Conduct
 
-## 1. Purpose
+## Our Pledge
 
-At Vexel Innovations, we are committed to maintaining a professional, respectful, and secure environment for everyone involved in our projects.
+We as contributors and maintainers of the Smooth Pizza Counter project pledge to make participation in our project a harassment-free experience for everyone, regardless of age, body size, disability, ethnicity, gender identity and expression, level of experience, nationality, personal appearance, race, religion, or sexual identity and orientation.
 
-This Code of Conduct defines expected behavior for all contributors, employees, collaborators, and authorized users interacting with our software, documentation, or communication channels.
+## Our Standards
 
----
+**Expected behaviour:**
+- Use welcoming and inclusive language
+- Be respectful of differing viewpoints and experiences
+- Gracefully accept constructive criticism
+- Focus on what is best for the project and the team
+- Show empathy towards other contributors
 
-## 2. Our Commitment
+**Unacceptable behaviour:**
+- Use of sexualised language or imagery
+- Trolling, insulting or derogatory comments, and personal or political attacks
+- Public or private harassment
+- Publishing others' private information without explicit permission
+- Other conduct which could reasonably be considered inappropriate in a professional setting
 
-We are committed to:
+## Enforcement
 
-- Providing a safe and respectful working environment
-- Encouraging collaboration and innovation
-- Protecting intellectual property and confidential information
-- Maintaining professionalism in all technical and non-technical discussions
-- Ensuring fair and unbiased treatment of all contributors
+Instances of abusive, harassing, or otherwise unacceptable behaviour may be reported by contacting the project team at **conduct@vexelinnovations.com**. All complaints will be reviewed and investigated and will result in a response deemed necessary and appropriate to the circumstances.
 
----
+Project maintainers who do not follow or enforce the Code of Conduct in good faith may face temporary or permanent repercussions as determined by other members of the project leadership.
 
-## 3. Expected Behavior
+## Attribution
 
-All participants are expected to:
-
-- Communicate respectfully and professionally
-- Follow project guidelines and technical standards
-- Respect intellectual property and licensing rules
-- Use clear, constructive language in discussions and code reviews
-- Report issues or concerns through proper channels
-- Respect decisions made by maintainers and project leads
-
----
-
-## 4. Unacceptable Behavior
-
-The following behaviors are strictly prohibited:
-
-- Harassment, discrimination, or offensive language of any kind
-- Sharing or distributing proprietary or confidential code without permission
-- Unauthorized access, copying, or reverse engineering of the software
-- Malicious code injection or sabotage of project systems
-- Spamming, trolling, or disruptive communication
-- Public disclosure of vulnerabilities without approval
-- Misrepresentation of contributions or identity
-
----
-
-## 5. Intellectual Property Protection
-
-- All source code remains the exclusive property of Vexel Innovations
-- Contributions do not grant ownership rights
-- Unauthorized reuse or redistribution is prohibited
-
----
-
-## 6. Reporting Violations
-
-If you observe behavior that violates this Code of Conduct, report it immediately:
-
-**Email:** usamaado36@gmail.com
-
-Include:
-- Description of the incident
-- Relevant evidence or context
-- Time of occurrence (if possible)
-
-All reports will be handled confidentially.
-
----
-
-## 7. Enforcement
-
-Violations may result in:
-
-- Warning
-- Temporary suspension of access
-- Permanent removal from the project
-- Legal action in serious cases
-
-Enforcement decisions are made by project maintainers.
-
----
-
-## 8. Scope
-
-This Code of Conduct applies to:
-
-- All repositories under Vexel Innovations
-- Issue trackers, pull requests, and discussions
-- Internal and external communication channels
-- Any representation of the organization
-
----
-
-## 9. Acknowledgment
-
-By using or contributing to this project, you agree to follow this Code of Conduct.
+This Code of Conduct is adapted from the [Contributor Covenant](https://www.contributor-covenant.org), version 2.1.
