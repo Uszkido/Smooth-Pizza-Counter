@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pizza & Ice Cream Club | Server Setup & Autostart Guide</title>
+    <meta name="description"
+        content="Complete server setup, autostart, and background service configuration guide for PizzaClub AI VMS.">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0b0c10;
+            --card: rgba(31, 40, 51, 0.78);
+            --accent: #66fcf1;
+            --accent2: #45a29e;
+            --text: #c5c6c7;
+            --pure: #ffffff;
+            --border: rgba(255, 255, 255, 0.06);
+            --green: #4ade80;
+            --orange: #fb923c;
+            --red: #ff4b2b;
+            --yellow: #fbbf24;
+            --purple: #a78bfa;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* HERO */
+        .hero {
+            background: linear-gradient(160deg, rgba(31, 40, 51, 0.95) 0%, #070809 100%);
+            padding: 5rem 2rem 4rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 700px;
+            height: 700px;
+            background: radial-gradient(circle, rgba(102, 252, 241, 0.05) 0%, transparent 65%);
+            pointer-events: none;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(102, 252, 241, 0.1);
+            color: var(--accent);
+            border: 1px solid rgba(102, 252, 241, 0.2);
+            border-radius: 50px;
+            padding: .35rem 1.2rem;
+            font-size: .75rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+        }
+
+        .logo {
+            font-size: 2.8rem;
+            font-weight: 900;
+            color: var(--pure);
+            letter-spacing: -1px;
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        .hero-sub {
+            opacity: .6;
+            font-size: 1rem;
+            margin-top: .4rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .hero-pills {
+            display: flex;
+            gap: .8rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .pill {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            padding: .4rem 1.1rem;
+            font-size: .82rem;
+            display: flex;
+            align-items: center;
+            gap: .4rem;
+        }
+
+        .pill .dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+        }
+
+        .dot-green {
+            background: var(--green);
+            box-shadow: 0 0 6px var(--green);
+        }
+
+        .dot-orange {
+            background: var(--orange);
+            box-shadow: 0 0 6px var(--orange);
+        }
+
+        .dot-purple {
+            background: var(--purple);
+            box-shadow: 0 0 6px var(--purple);
+        }
+
+        /* NAV */
+        .nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(7, 8, 9, 0.93);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--border);
+            padding: .8rem 2rem;
+            display: flex;
+            gap: 1.4rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .nav a {
+            color: var(--text);
+            font-size: .82rem;
+            font-weight: 600;
+            letter-spacing: .4px;
+            padding: .3rem 0;
+            border-bottom: 2px solid transparent;
+            transition: all .2s;
+        }
+
+        .nav a:hover {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+            text-decoration: none;
+        }
+
+        /* LAYOUT */
+        .wrap {
+            max-width: 1020px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        section {
+            background: var(--card);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin-bottom: 2.5rem;
+            border: 1px solid var(--border);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, .35);
+            scroll-margin-top: 60px;
+        }
+
+        section.a-border {
+            border-color: rgba(102, 252, 241, .25);
+        }
+
+        section.g-border {
+            border-color: rgba(74, 222, 128, .25);
+        }
+
+        section.o-border {
+            border-color: rgba(251, 146, 60, .25);
+        }
+
+        section.r-border {
+            border-color: rgba(255, 75, 43, .25);
+        }
+
+        section.p-border {
+            border-color: rgba(167, 139, 250, .25);
+        }
+
+        h2 {
+            color: var(--pure);
+            font-size: 1.7rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: .7rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: .9rem;
+        }
+
+        .sn {
+            font-size: .7rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: var(--accent);
+            background: rgba(102, 252, 241, .1);
+            padding: .2rem .7rem;
+            border-radius: 50px;
+            border: 1px solid rgba(102, 252, 241, .2);
+        }
+
+        h3 {
+            color: var(--pure);
+            font-size: 1.15rem;
+            margin: 1.8rem 0 .6rem;
+        }
+
+        p {
+            margin-bottom: .9rem;
+        }
+
+        ul,
+        ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        li {
+            margin-bottom: .45rem;
+        }
+
+        strong {
+            color: var(--pure);
+        }
+
+        /* CODE */
+        code {
+            background: rgba(0, 0, 0, .55);
+            padding: .15rem .45rem;
+            border-radius: 5px;
+            color: var(--accent);
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: .88em;
+        }
+
+        pre {
+            background: rgba(0, 0, 0, .65);
+            border: 1px solid rgba(102, 252, 241, .1);
+            border-radius: 14px;
+            padding: 1.4rem 1.6rem;
+            margin: 1.2rem 0;
+            overflow-x: auto;
+            position: relative;
+        }
+
+        pre code {
+            background: transparent;
+            padding: 0;
+            color: #abb2bf;
+            font-size: .91rem;
+            line-height: 1.9;
+        }
+
+        pre .cmd {
+            color: var(--accent);
+        }
+
+        pre .cmt {
+            color: #5c6370;
+        }
+
+        pre .key {
+            color: #e06c75;
+        }
+
+        pre .val {
+            color: var(--green);
+        }
+
+        pre .str {
+            color: var(--yellow);
+        }
+
+        .pre-label {
+            position: absolute;
+            top: .6rem;
+            right: 1rem;
+            font-size: .68rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            opacity: .3;
+        }
+
+        /* CALLOUTS */
+        .box {
+            padding: 1.2rem 1.4rem;
+            border-radius: 0 12px 12px 0;
+            margin: 1.3rem 0;
+            border-left: 4px solid;
+        }
+
+        .box-info {
+            background: rgba(102, 252, 241, .06);
+            border-color: var(--accent);
+        }
+
+        .box-warn {
+            background: rgba(251, 146, 60, .06);
+            border-color: var(--orange);
+        }
+
+        .box-danger {
+            background: rgba(255, 75, 43, .06);
+            border-color: var(--red);
+        }
+
+        .box-good {
+            background: rgba(74, 222, 128, .06);
+            border-color: var(--green);
+        }
+
+        .box-purple {
+            background: rgba(167, 139, 250, .06);
+            border-color: var(--purple);
+        }
+
+        .box .bt {
+            font-weight: 700;
+            color: var(--pure);
+            margin-bottom: .35rem;
+            font-size: .93rem;
+        }
+
+        /* TABLES */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.3rem 0;
+            font-size: .91rem;
+        }
+
+        th {
+            background: rgba(0, 0, 0, .45);
+            color: var(--accent);
+            text-align: left;
+            padding: .7rem 1rem;
+            font-size: .72rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            border-bottom: 1px solid rgba(102, 252, 241, .12);
+        }
+
+        td {
+            padding: .7rem 1rem;
+            border-bottom: 1px solid var(--border);
+            vertical-align: top;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            background: rgba(255, 255, 255, .02);
+        }
+
+        .g {
+            color: var(--green);
+            font-weight: 600;
+        }
+
+        .o {
+            color: var(--orange);
+            font-weight: 600;
+        }
+
+        .r {
+            color: var(--red);
+            font-weight: 600;
+        }
+
+        /* FILE GRID */
+        .file-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 1.3rem 0;
+        }
+
+        .file-card {
+            background: rgba(0, 0, 0, .35);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 1.2rem 1.4rem;
+        }
+
+        .file-card .fc-icon {
+            font-size: 1.4rem;
+            margin-bottom: .4rem;
+        }
+
+        .file-card .fc-name {
+            color: var(--accent);
+            font-family: monospace;
+            font-size: .88rem;
+            font-weight: 700;
+            margin-bottom: .25rem;
+        }
+
+        .file-card .fc-desc {
+            font-size: .83rem;
+            opacity: .75;
+        }
+
+        .file-card .fc-badge {
+            display: inline-block;
+            margin-top: .5rem;
+            font-size: .7rem;
+            padding: .15rem .55rem;
+            border-radius: 50px;
+            font-weight: 700;
+        }
+
+        .badge-admin {
+            background: rgba(255, 75, 43, .15);
+            color: var(--red);
+            border: 1px solid rgba(255, 75, 43, .3);
+        }
+
+        .badge-user {
+            background: rgba(74, 222, 128, .12);
+            color: var(--green);
+            border: 1px solid rgba(74, 222, 128, .25);
+        }
+
+        .badge-doc {
+            background: rgba(167, 139, 250, .12);
+            color: var(--purple);
+            border: 1px solid rgba(167, 139, 250, .25);
+        }
+
+        /* STEPS */
+        .steps {
+            display: flex;
+            flex-direction: column;
+            gap: 1.1rem;
+            margin: 1.3rem 0;
+        }
+
+        .step {
+            display: flex;
+            gap: 1.1rem;
+            background: rgba(0, 0, 0, .3);
+            border-radius: 14px;
+            padding: 1.1rem 1.3rem;
+            border: 1px solid var(--border);
+            align-items: flex-start;
+        }
+
+        .snum {
+            flex-shrink: 0;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            color: #000;
+            font-weight: 900;
+            font-size: .85rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sbody {
+            flex: 1;
+        }
+
+        .sbody strong {
+            color: var(--pure);
+            display: block;
+            margin-bottom: .3rem;
+        }
+
+        /* ARCHITECTURE DIAGRAM */
+        .arch {
+            background: rgba(0, 0, 0, .5);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 1.6rem;
+            margin: 1.4rem 0;
+            font-family: monospace;
+            font-size: .82rem;
+            line-height: 2;
+            color: #8be9fd;
+            white-space: pre;
+        }
+
+        .arch .ah {
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        .arch .as {
+            color: var(--green);
+        }
+
+        .arch .aw {
+            color: var(--orange);
+        }
+
+        /* FOOTER */
+        .footer {
+            text-align: center;
+            padding: 3.5rem 2rem;
+            opacity: .65;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: .8rem;
+        }
+
+        .footer img {
+            height: 36px;
+            opacity: .75;
+        }
+
+        .footer .fver {
+            font-size: .75rem;
+            opacity: .4;
+            font-family: monospace;
+            margin-top: .2rem;
+        }
+
+        @media(max-width:700px) {
+            .file-grid {
+                grid-template-columns: 1fr;
+            }
+
+            h2 {
+                font-size: 1.3rem;
+            }
+
+            .arch {
+                font-size: .7rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ════ HERO ════ -->
+    <div class="hero">
+        <div class="badge">🖥️ Server Setup Guide</div>
+        <div class="logo">Pizza &amp; Ice Cream <span>Club</span></div>
+        <div style="font-size:.95rem;opacity:.45;margin-top:.3rem;">Developed by Vexel Innovations</div>
+        <div class="hero-sub">Background Service &amp; Autostart — Enterprise Edition</div>
+        <div class="hero-pills">
+            <div class="pill"><span class="dot dot-green"></span> Autostart on Boot</div>
+            <div class="pill"><span class="dot dot-orange"></span> Crash Auto-Recovery</div>
+            <div class="pill"><span class="dot dot-purple"></span> LAN &amp; Remote Access</div>
+        </div>
+    </div>
+
+    <!-- ════ NAV ════ -->
+    <nav class="nav">
+        <a href="#overview">Overview</a>
+        <a href="#files">Files</a>
+        <a href="#install">Install</a>
+        <a href="#autostart">Autostart</a>
+        <a href="#watchdog">Watchdog</a>
+        <a href="#network">Network</a>
+        <a href="#advanced">Advanced</a>
+        <a href="#faq">FAQ</a>
+    </nav>
+
+    <div class="wrap">
+
+        <!-- ════ OVERVIEW ════ -->
+        <section id="overview" class="a-border">
+            <h2><span class="sn">INTRO</span> How PizzaClub Runs as a Server</h2>
+            <p>
+                PizzaClub AI VMS operates as a lightweight <strong>local web server</strong> built on FastAPI + Uvicorn.
+                When running, it binds to a port on the machine and serves the live dashboard, video stream, and REST
+                API
+                to any browser on the network — exactly like a real server application.
+            </p>
+            <p>
+                This guide configures PizzaClub to behave like production server software:
+            </p>
+            <ul>
+                <li><strong>Starts automatically</strong> when Windows boots — no one needs to log in</li>
+                <li><strong>Runs hidden in the background</strong> — no visible window consuming screen space</li>
+                <li><strong>Auto-recovers from crashes</strong> — watchdog restarts it within 10 seconds</li>
+                <li><strong>Accessible from any device</strong> on the local network via LAN IP</li>
+                <li><strong>Remote access</strong> via ngrok for monitoring from anywhere in the world</li>
+            </ul>
+
+            <div class="arch"><span class="ah"> PIZZACLUB AI SERVER ARCHITECTURE</span>
+                <span class="ah"> ════════════════════════════════════════════════════</span>
+                Windows Task Scheduler
+                │ (starts on boot, runs as SYSTEM)
+                ▼
+                <span class="as">PizzaClub.exe</span> ◄──── Watchdog auto-restarts on crash
+                │
+                ├── FastAPI + Uvicorn ←── binds to port (default: <span class="aw">8040</span>)
+                │ │
+                │ ├── / → Live Dashboard (browser)
+                │ ├── /video_feed → MJPEG stream
+                │ ├── /analytics → Analytics page
+                │ └── /api/* → REST endpoints
+                │
+                ├── YOLO v8 AI Engine (object tracking)
+                ├── config.json (camera, port, credentials)
+                └── pizza_logs.json (daily counts history)
+
+                <span class="ah"> ACCESS METHODS</span>
+                ─────────────────────────────────────────
+                <span class="as">Local :</span> http://127.0.0.1:<span class="aw">8040</span> (same machine)
+                <span class="as">LAN :</span> http://192.168.x.x:<span class="aw">8040</span> (any device on WiFi/LAN)
+                <span class="as">Remote :</span> https://xxxx.ngrok.io (internet, via ngrok)
+            </div>
+        </section>
+
+        <!-- ════ FILES ════ -->
+        <section id="files">
+            <h2><span class="sn">01</span> 📁 Server Management Files</h2>
+            <p>All scripts are included in the <code>PizzaClub_v2.1_Enterprise</code> folder.</p>
+
+            <div class="file-grid">
+                <div class="file-card">
+                    <div class="fc-icon">⚙️</div>
+                    <div class="fc-name">INSTALL_SERVICE.bat</div>
+                    <div class="fc-desc">Registers PizzaClub as an autostart Windows Task, opens the firewall port, and
+                        starts the server immediately.</div>
+                    <span class="fc-badge badge-admin">🔒 Run as Admin</span>
+                </div>
+                <div class="file-card">
+                    <div class="fc-icon">🗑️</div>
+                    <div class="fc-name">UNINSTALL_SERVICE.bat</div>
+                    <div class="fc-desc">Removes the autostart task, kills the process, and removes the firewall rule.
+                        Your data is untouched.</div>
+                    <span class="fc-badge badge-admin">🔒 Run as Admin</span>
+                </div>
+                <div class="file-card">
+                    <div class="fc-icon">📊</div>
+                    <div class="fc-name">STATUS.bat</div>
+                    <div class="fc-desc">Shows live server status: running/stopped, port, autostart state, firewall, LAN
+                        IP. Has a quick action menu.</div>
+                    <span class="fc-badge badge-user">▶ Double-click to run</span>
+                </div>
+                <div class="file-card">
+                    <div class="fc-icon">🔄</div>
+                    <div class="fc-name">WATCHDOG.bat</div>
+                    <div class="fc-desc">Production watchdog — keeps the server alive forever. Logs all restarts to
+                        <code>watchdog.log</code> with timestamps.
+                    </div>
+                    <span class="fc-badge badge-user">▶ Double-click to run</span>
+                </div>
+                <div class="file-card">
+                    <div class="fc-icon">🌐</div>
+                    <div class="fc-name">START_REMOTE_ACCESS.bat</div>
+                    <div class="fc-desc">Starts the ngrok tunnel on the configured port. Share the generated URL for
+                        worldwide remote monitoring.</div>
+                    <span class="fc-badge badge-user">▶ Double-click to run</span>
+                </div>
+                <div class="file-card">
+                    <div class="fc-icon">🔌</div>
+                    <div class="fc-name">CHANGE_PORT_AND_LAUNCH.bat</div>
+                    <div class="fc-desc">Reads port from <code>config.json</code>, starts the server, and opens the
+                        browser on the correct URL.</div>
+                    <span class="fc-badge badge-user">▶ Double-click to run</span>
+                </div>
+                <div class="file-card" style="border-color:rgba(74,222,128,.3);">
+                    <div class="fc-icon">👻</div>
+                    <div class="fc-name">START_HIDDEN.vbs</div>
+                    <div class="fc-desc">Launches the Watchdog with <strong>no visible window at all</strong>. Closing
+                        any terminal after this has zero effect — the server keeps running silently.</div>
+                    <span class="fc-badge badge-user">▶ Double-click to run</span>
+                </div>
+                <div class="file-card">
+                    <div class="fc-icon">⏹️</div>
+                    <div class="fc-name">STOP_SERVICE.bat</div>
+                    <div class="fc-desc">Stops the running server immediately. The autostart task stays registered — the
+                        server will restart on next reboot (or run START_HIDDEN.vbs to restart now).</div>
+                    <span class="fc-badge badge-user">▶ Double-click to run</span>
+                </div>
+            </div>
+
+            <div class="box box-good" style="margin-top:1rem;">
+                <div class="bt">✅ Closing the terminal does NOT stop the server</div>
+                When the server is started via <code>START_HIDDEN.vbs</code> or via the Task Scheduler
+                (after running <code>INSTALL_SERVICE.bat</code>), it runs <strong>completely detached</strong>
+                from any terminal window. You can close every CMD window, log off, or even restart Windows
+                — the server reappears automatically. The only way to stop it is to run
+                <code>STOP_SERVICE.bat</code> or <code>UNINSTALL_SERVICE.bat</code>.
+            </div>
+            <div class="box box-info">
+                <div class="bt">💡 Configuration file: config.json</div>
+                All server behaviour is controlled from <code>config.json</code> — no code changes needed.
+                Edit this file to change port, camera settings, branch name, daily targets, and notifications.
+            </div>
+        </section>
+
+        <!-- ════ INSTALL ════ -->
+        <section id="install" class="g-border">
+            <h2><span class="sn">02</span> ⚙️ Installation — Step by Step</h2>
+
+            <h3>First-Time Setup (5 minutes)</h3>
+            <div class="steps">
+                <div class="step">
+                    <div class="snum">1</div>
+                    <div class="sbody">
+                        <strong>Copy the folder to a permanent location</strong>
+                        Do <em>not</em> run the app from your Desktop, Downloads, or a USB drive. Choose a permanent
+                        home such as <code>C:\PizzaClub\</code> or <code>C:\Program Files\PizzaClub\</code>.
+                        This ensures the Task Scheduler path never breaks.
+                        <pre><code><span class="cmt">Example path:</span>
+<span class="cmd">C:\PizzaClub\PizzaClub_v2.1_Enterprise\</span></code></pre>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="snum">2</div>
+                    <div class="sbody">
+                        <strong>Edit config.json — set your port and camera</strong>
+                        Open <code>config.json</code> in Notepad. Configure <code>app_port</code>, your camera IP,
+                        and branch name before installing.
+                        <pre><code><span class="pre-label">config.json</span>{
+    <span class="key">"cam_ip"</span>:      <span class="str">"192.168.1.16"</span>,
+    <span class="key">"cam_port"</span>:   <span class="str">"554"</span>,
+    <span class="key">"cam_brand"</span>:  <span class="str">"DAHUA"</span>,
+    <span class="key">"cam_user"</span>:   <span class="str">"admin"</span>,
+    <span class="key">"cam_pass"</span>:   <span class="str">"yourpassword"</span>,
+
+    <span class="key">"app_port"</span>:   <span class="val">8040</span>,       <span class="cmt">← choose any free port</span>
+    <span class="key">"branch_name"</span>:<span class="str">"Old Airport"</span>, <span class="cmt">← shown on dashboard</span>
+    <span class="key">"daily_target"</span>:<span class="val">500</span>,       <span class="cmt">← goal ring target</span>
+
+    <span class="key">"users"</span>: {
+        <span class="key">"admin"</span>:  { <span class="key">"password"</span>: <span class="str">"CHANGE_ME"</span>, <span class="key">"role"</span>: <span class="str">"manager"</span> },
+        <span class="key">"viewer"</span>: { <span class="key">"password"</span>: <span class="str">"CHANGE_ME"</span>,   <span class="key">"role"</span>: <span class="str">"viewer"</span>  }
+    }
+}</code></pre>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="snum">3</div>
+                    <div class="sbody">
+                        <strong>Right-click INSTALL_SERVICE.bat → "Run as administrator"</strong>
+                        The installer will:
+                        <ul style="margin-top:.5rem;">
+                            <li>Register a Windows Task Scheduler task named <code>PizzaClub AI Server</code></li>
+                            <li>Open the firewall for the configured port</li>
+                            <li>Start the server immediately and open the browser</li>
+                            <li>Write <code>SERVER_INFO.txt</code> with the configuration summary</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="snum">4</div>
+                    <div class="sbody">
+                        <strong>Verify the installation</strong>
+                        Double-click <code>STATUS.bat</code>. You should see:
+                        <ul style="margin-top:.5rem;">
+                            <li>Process Status: <span class="g">[RUNNING] ✅</span></li>
+                            <li>Autostart: <span class="g">[REGISTERED] ✅</span></li>
+                            <li>Firewall: <span class="g">[OPEN] ✅</span></li>
+                            <li>Port <code>8040</code>: <span class="g">[LISTENING] ✅</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="box box-warn">
+                <div class="bt">⚠️ Always install to a permanent path</div>
+                Task Scheduler stores the full absolute path to <code>PizzaClub.exe</code>. If you later move the
+                folder,
+                the autostart task will fail silently. Run <code>UNINSTALL_SERVICE.bat</code> then
+                <code>INSTALL_SERVICE.bat</code> again after moving.
+            </div>
+        </section>
+
+        <!-- ════ AUTOSTART ════ -->
+        <section id="autostart" class="a-border">
+            <h2><span class="sn">03</span> 🚀 Autostart on Windows Boot</h2>
+
+            <p>
+                The installer registers PizzaClub as a <strong>Windows Task Scheduler</strong> task. This is the
+                most reliable way to run background software on Windows — it's the same mechanism used by
+                antivirus software, backup agents, and system utilities.
+            </p>
+
+            <h3>How it works</h3>
+            <ul>
+                <li>Trigger: <strong>On system startup</strong> (30-second delay to let Windows settle)</li>
+                <li>Runs as: <strong>SYSTEM account</strong> — starts <em>even before anyone logs in</em></li>
+                <li>Priority: <strong>Highest</strong> — not throttled by Windows resource governor</li>
+                <li>Hidden: Task launches <code>START_HIDDEN.vbs</code> → <code>WATCHDOG.bat</code> →
+                    <code>PizzaClub.exe</code>, <strong>all invisible</strong>, no CMD window anywhere</li>
+                <li>Closing any terminal: <strong>zero effect</strong> — the process is owned by SYSTEM, not your user
+                    session</li>
+            </ul>
+
+            <h3>Verifying the task manually</h3>
+            <div class="steps">
+                <div class="step">
+                    <div class="snum">1</div>
+                    <div class="sbody">
+                        <strong>Open Task Scheduler</strong>
+                        Press <code>Win + R</code>, type <code>taskschd.msc</code>, press Enter.
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="snum">2</div>
+                    <div class="sbody">
+                        <strong>Find the task</strong>
+                        In the left panel click <strong>Task Scheduler Library</strong>. Look for
+                        <code>PizzaClub AI Server</code> in the list.
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="snum">3</div>
+                    <div class="sbody">
+                        <strong>Check status</strong>
+                        The <strong>Status</strong> column should show <code>Ready</code>.
+                        Right-click → <strong>Run</strong> to test it manually.
+                    </div>
+                </div>
+            </div>
+
+            <h3>Disabling autostart temporarily</h3>
+            <p>
+                In Task Scheduler, right-click <code>PizzaClub AI Server</code> → <strong>Disable</strong>.
+                The task entry is kept but won't run on next boot. To re-enable: right-click → <strong>Enable</strong>.
+                <br>Or run <code>UNINSTALL_SERVICE.bat</code> to remove it completely.
+            </p>
+
+            <h3>Alternative: Startup Folder (simpler, user-only)</h3>
+            <p>
+                For a quicker setup that only runs when <em>you</em> are logged in (not as SYSTEM):
+            </p>
+            <pre><code><span class="cmt">1. Press Win+R, type:</span>
+<span class="cmd">shell:startup</span>
+<span class="cmt">2. Create a shortcut to PizzaClub.exe in that folder.
+   It will launch every time you log in.</span></code></pre>
+
+            <div class="box box-info">
+                <div class="bt">💡 Task Scheduler vs Startup Folder</div>
+                <table style="margin:0;">
+                    <thead>
+                        <tr>
+                            <th>Method</th>
+                            <th>Starts without login</th>
+                            <th>Admin required</th>
+                            <th>Crash recovery</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Task Scheduler (SYSTEM)</td>
+                            <td class="g">Yes ✅</td>
+                            <td class="o">Yes (install only)</td>
+                            <td class="o">No (add Watchdog)</td>
+                        </tr>
+                        <tr>
+                            <td>Startup Folder</td>
+                            <td class="r">No ❌</td>
+                            <td class="g">No</td>
+                            <td class="r">No</td>
+                        </tr>
+                        <tr>
+                            <td>Task Scheduler + Watchdog</td>
+                            <td class="g">Yes ✅</td>
+                            <td class="o">Yes (install only)</td>
+                            <td class="g">Yes ✅</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ════ WATCHDOG ════ -->
+        <section id="watchdog" class="o-border">
+            <h2><span class="sn">04</span> 🔄 Crash Recovery — Watchdog</h2>
+
+            <p>
+                <code>WATCHDOG.bat</code> is a production-grade keep-alive script. It launches
+                <code>PizzaClub.exe</code>, waits for it to exit (for any reason — crash, update, manual close),
+                then restarts it after 10 seconds. All events are timestamped and logged to <code>watchdog.log</code>.
+            </p>
+
+            <h3>Setting up the Watchdog as the autostart target</h3>
+            <p>For maximum resilience, configure the Task Scheduler task to run the <em>Watchdog</em> instead of
+                <code>PizzaClub.exe</code> directly (so even if the main exe crashes repeatedly, the watchdog keeps
+                trying):
+            </p>
+
+            <div class="steps">
+                <div class="step">
+                    <div class="snum">1</div>
+                    <div class="sbody">
+                        <strong>Open Task Scheduler</strong> → find <code>PizzaClub AI Server</code> → double-click.
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="snum">2</div>
+                    <div class="sbody">
+                        <strong>Go to the "Actions" tab</strong> → double-click the existing action.
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="snum">3</div>
+                    <div class="sbody">
+                        <strong>Change Program/Script to:</strong>
+                        <pre><code><span class="cmd">C:\PizzaClub\PizzaClub_v2.1_Enterprise\WATCHDOG.bat</span></code></pre>
+                        Click OK → OK.
+                    </div>
+                </div>
+            </div>
+
+            <h3>Reading the Watchdog Log</h3>
+            <p>Open <code>watchdog.log</code> (in the same folder) in Notepad at any time:</p>
+            <pre><code><span class="pre-label">watchdog.log</span><span class="cmt">[2026-04-25 08:31:02]</span> PizzaClub Watchdog Started
+<span class="cmt">[2026-04-25 08:31:02]</span> EXE : C:\PizzaClub\PizzaClub.exe
+<span class="cmt">[2026-04-25 08:31:02]</span> Port: 8040
+<span class="cmt">[2026-04-25 08:31:03]</span> Starting PizzaClub.exe...
+<span class="cmt">[2026-04-25 14:55:11]</span> PizzaClub.exe exited. Restarting in 10 seconds...
+<span class="cmt">[2026-04-25 14:55:21]</span> Starting PizzaClub.exe...</code></pre>
+
+            <div class="box box-good">
+                <div class="bt">✅ Log rotation is automatic</div>
+                When <code>watchdog.log</code> exceeds 512 KB it is automatically backed up to
+                <code>watchdog.log.bak</code> and a fresh log starts. This prevents unbounded disk growth during
+                long-term operation.
+            </div>
+        </section>
+
+        <!-- ════ NETWORK ════ -->
+        <section id="network" class="p-border">
+            <h2><span class="sn">05</span> 🌐 Network Access Setup</h2>
+
+            <h3>Accessing from the same machine</h3>
+            <pre><code>http://127.0.0.1:<span class="val">8040</span>    <span class="cmt"># always works on the host PC</span></code></pre>
+
+            <h3>Accessing from other devices on the same network (LAN)</h3>
+            <ol>
+                <li>Find the server machine's IP: open <code>STATUS.bat</code> and read the <strong>LAN IP
+                        Access</strong> line.</li>
+                <li>On any phone, tablet, or PC on the same WiFi/Ethernet, open:
+                    <code>http://&lt;server-ip&gt;:8040</code>
+                </li>
+                <li>Log in with the manager or viewer credentials.</li>
+            </ol>
+
+            <div class="box box-warn">
+                <div class="bt">⚠️ Use a static IP on the server machine</div>
+                If the server's IP changes (e.g. router reassigns via DHCP), remote devices will lose access.
+                Set a <strong>static/reserved IP</strong> in your router's DHCP settings for the server's MAC address.
+                Typical home routers have this under "Address Reservation" or "Static DHCP".
+            </div>
+
+            <h3>Finding your machine's IP address</h3>
+            <pre><code><span class="cmt"># Open Command Prompt (Win+R → cmd) and type:</span>
+<span class="cmd">ipconfig</span>
+<span class="cmt"># Look for: "IPv4 Address . . . : 192.168.x.x"</span></code></pre>
+
+            <h3>Remote Access over the Internet (ngrok)</h3>
+            <p>
+                ngrok creates a secure temporary URL that tunnels through NAT/firewalls — no router port-forwarding
+                needed. It is included in the package as <code>ngrok.exe</code>.
+            </p>
+            <div class="steps">
+                <div class="step">
+                    <div class="snum">1</div>
+                    <div class="sbody">
+                        <strong>Double-click <code>START_REMOTE_ACCESS.bat</code></strong>
+                        It reads the port from <code>config.json</code> automatically.
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="snum">2</div>
+                    <div class="sbody">
+                        <strong>Look for the Forwarding URL in the terminal</strong>
+                        It will look like: <code>https://abc123.ngrok-free.app</code>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="snum">3</div>
+                    <div class="sbody">
+                        <strong>Share that URL</strong> with anyone — they can access the live dashboard from
+                        any device, anywhere in the world. The link is active as long as the script is running.
+                    </div>
+                </div>
+            </div>
+
+            <h3>Permanent Remote Access (ngrok free account)</h3>
+            <p>
+                Free ngrok sessions expire after a few hours. For a stable permanent URL:
+            </p>
+            <ol>
+                <li>Create a free account at <a href="https://ngrok.com" target="_blank">ngrok.com</a></li>
+                <li>Get your auth token from the dashboard</li>
+                <li>Run in Command Prompt: <code>ngrok.exe authtoken YOUR_TOKEN</code></li>
+                <li>Your sessions will last much longer and you can get a fixed subdomain on paid plans</li>
+            </ol>
+
+            <h3>Windows Firewall</h3>
+            <p>
+                The <code>INSTALL_SERVICE.bat</code> script automatically adds a firewall rule for the configured
+                port. If you need to add it manually:
+            </p>
+            <pre><code><span class="cmt"># Run in Command Prompt as Administrator:</span>
+<span class="cmd">netsh advfirewall firewall add rule</span> ^
+    name="PizzaClub AI Server" ^
+    dir=in action=allow protocol=TCP ^
+    localport=<span class="val">8040</span></code></pre>
+        </section>
+
+        <!-- ════ ADVANCED ════ -->
+        <section id="advanced">
+            <h2><span class="sn">06</span> 🛠️ Advanced Configuration</h2>
+
+            <h3>Running Multiple Branches from One PC</h3>
+            <p>
+                Copy the entire application folder to a second location (e.g. <code>C:\PizzaClub\Branch2\</code>),
+                give it a different <code>"app_port"</code> in <code>config.json</code>, then run
+                <code>INSTALL_SERVICE.bat</code> in that folder. Name the task something unique when prompted, or
+                edit the task name inside the bat before running.
+            </p>
+            <pre><code><span class="cmt">Branch 1 — Old Airport:</span>  config.json → <span class="key">"app_port"</span>: <span class="val">8040</span>
+<span class="cmt">Branch 2 — New Airport:</span>  config.json → <span class="key">"app_port"</span>: <span class="val">8050</span></code></pre>
+
+            <h3>Changing the Port After Installation</h3>
+            <ol>
+                <li>Edit <code>"app_port"</code> in <code>config.json</code></li>
+                <li>Run <code>UNINSTALL_SERVICE.bat</code> (as Admin) to remove the old firewall rule</li>
+                <li>Run <code>INSTALL_SERVICE.bat</code> (as Admin) to register the new port and firewall rule</li>
+            </ol>
+
+            <h3>Changing Passwords</h3>
+            <p>
+                Edit the <code>"users"</code> section in <code>config.json</code>. Changes take effect on the
+                next login — active sessions are not terminated automatically.
+            </p>
+            <pre><code><span class="key">"users"</span>: {
+    <span class="key">"admin"</span>:  { <span class="key">"password"</span>: <span class="str">"yourNewPassword"</span>, <span class="key">"role"</span>: <span class="str">"manager"</span> },
+    <span class="key">"viewer"</span>: { <span class="key">"password"</span>: <span class="str">"anotherPass"</span>,    <span class="key">"role"</span>: <span class="str">"viewer"</span>  }
+}</code></pre>
+
+            <h3>Daily Target and Branch Name</h3>
+            <pre><code><span class="key">"daily_target"</span>: <span class="val">600</span>,            <span class="cmt">← goal ring target (pizzas/day)</span>
+<span class="key">"branch_name"</span>:  <span class="str">"New Airport"</span>,   <span class="cmt">← shown in header &amp; notifications</span></code></pre>
+
+            <h3>Telegram &amp; WhatsApp Alerts</h3>
+            <pre><code><span class="key">"telegram_bot_token"</span>: <span class="str">"123456:ABC-xyz"</span>,   <span class="cmt">← from @BotFather</span>
+<span class="key">"telegram_chat_id"</span>:   <span class="str">"-1001234567890"</span>,   <span class="cmt">← group or user ID</span>
+<span class="key">"whatsapp_phone"</span>:     <span class="str">"+2348012345678"</span>,
+<span class="key">"whatsapp_apikey"</span>:    <span class="str">"123456"</span>            <span class="cmt">← from callmebot.com</span></code></pre>
+
+            <h3>Preserving Data Across Reinstalls</h3>
+            <p>Before reinstalling or moving the application, back up these files:</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>File</th>
+                        <th>Contents</th>
+                        <th>Safe to delete?</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>config.json</code></td>
+                        <td>All settings, credentials, camera</td>
+                        <td class="r">No — back up first</td>
+                    </tr>
+                    <tr>
+                        <td><code>pizza_logs.json</code></td>
+                        <td>All historical daily counts</td>
+                        <td class="r">No — back up first</td>
+                    </tr>
+                    <tr>
+                        <td><code>audit_log.json</code></td>
+                        <td>User action history</td>
+                        <td class="o">Optional</td>
+                    </tr>
+                    <tr>
+                        <td><code>watchdog.log</code></td>
+                        <td>Crash/restart timestamps</td>
+                        <td class="g">Yes — auto-recreated</td>
+                    </tr>
+                    <tr>
+                        <td><code>SERVER_INFO.txt</code></td>
+                        <td>Installation summary</td>
+                        <td class="g">Yes — auto-recreated</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- ════ FAQ ════ -->
+        <section id="faq">
+            <h2><span class="sn">07</span> ❓ Frequently Asked Questions</h2>
+
+            <h3>The server doesn't start automatically after reboot</h3>
+            <p>
+                Run <code>STATUS.bat</code> to confirm the autostart task is <code>[REGISTERED]</code>.
+                If not, re-run <code>INSTALL_SERVICE.bat</code> as Administrator. Also check that the path
+                to <code>PizzaClub.exe</code> hasn't changed since installation.
+            </p>
+
+            <h3>Other devices on the network can't connect</h3>
+            <ol>
+                <li>Confirm <code>STATUS.bat</code> shows firewall <span class="g">[OPEN] ✅</span> — if not, run
+                    <code>INSTALL_SERVICE.bat</code> again
+                </li>
+                <li>Make sure you're using the server machine's actual LAN IP (not <code>127.0.0.1</code>)</li>
+                <li>Try temporarily disabling Windows Defender Firewall to test if it's a firewall issue</li>
+                <li>Confirm both devices are on the <em>same network</em> — a phone on mobile data won't see LAN devices
+                </li>
+            </ol>
+
+            <h3>How do I check if the server is actually running?</h3>
+            <p>
+                Run <code>STATUS.bat</code> — it checks process, port, firewall, and task registration in one view.
+                Or open <a href="http://127.0.0.1:8040" target="_blank">http://127.0.0.1:8040</a> in a browser.
+            </p>
+
+            <h3>The Watchdog keeps restarting — what does that mean?</h3>
+            <p>
+                Check <code>watchdog.log</code> for timestamps. If restarts happen every few seconds, open
+                <code>pizza_crash_log.txt</code> to see the Python exception that is causing the crash.
+                Common causes: camera IP unreachable at startup (the app retries automatically), or corrupt
+                <code>config.json</code> (re-enter your settings manually).
+            </p>
+
+            <h3>Can I run PizzaClub on a headless server (no monitor)?</h3>
+            <p>
+                Yes. The app runs entirely in the background. Access the dashboard from any other machine on the
+                network using the server's LAN IP and port. No monitor, keyboard, or mouse needed on the server
+                machine once the service is installed.
+            </p>
+
+            <h3>How do I completely remove PizzaClub?</h3>
+            <ol>
+                <li>Run <code>UNINSTALL_SERVICE.bat</code> as Administrator</li>
+                <li>Delete the entire application folder</li>
+                <li>Your browser history may still have the URL cached — this is harmless</li>
+            </ol>
+
+            <h3>Can the server URL be used by a phone app or third-party tool?</h3>
+            <p>
+                Yes. The REST API is available at <code>http://&lt;ip&gt;:&lt;port&gt;/api/stats</code>
+                (returns JSON). Any app that can make HTTP requests can read live pizza counts, hourly data,
+                and branch info. Authentication required: send a valid session cookie from <code>/login</code>.
+            </p>
+        </section>
+
+    </div>
+
+    <!-- ════ FOOTER ════ -->
+    <div class="footer">
+        <img src="./static/logo_white.png" alt="Vexel Innovations" onerror="this.style.display='none'">
+        <div>Engineered &amp; Packaged Professionally by Vexel Innovations</div>
+        <div class="fver">v2.1.0 · PizzaClub Enterprise · SERVER SETUP GUIDE · April 2026</div>
+    </div>
+
+</body>
+
+</html>

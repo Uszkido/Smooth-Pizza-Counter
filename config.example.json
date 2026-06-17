@@ -1,0 +1,27 @@
+{
+    "cam_ip": "0",
+    "cam_user": "admin",
+    "cam_pass": "",
+    "cam_port": "554",
+    "app_port": 8040,
+    "cam_brand": "DAHUA",
+    "line_y": 360,
+    "confidence": 0.5,
+    "yolo_model": "yolov8n.pt",
+    "daily_target": 500,
+    "telegram_bot_token": "",
+    "telegram_chat_id": "",
+    "branch_name": "Your Branch Name",
+    "whatsapp_phone": "",
+    "whatsapp_apikey": "",
+    "users": {
+        "admin": {
+            "password": "CHANGE_ME",
+            "role": "manager"
+        },
+        "viewer": {
+            "password": "CHANGE_ME",
+            "role": "viewer"
+        }
+    }
+}

@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Operations Guide | Pizza & Ice Cream Club AI</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800;900&family=JetBrains+Mono&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0b0c10;
+            --surface: #1a1f2e;
+            --surface2: #222836;
+            --primary: #66fcf1;
+            --primary-dim: #45a29e;
+            --warn: #fbbf24;
+            --danger: #ef4444;
+            --success: #22c55e;
+            --text: #c5c6c7;
+            --pure: #ffffff;
+            --border: rgba(255, 255, 255, 0.06);
+            --code-bg: #111318;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+
+        /* ─── TOP NAV ─── */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(11, 12, 16, 0.92);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-logo {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--pure);
+        }
+
+        .nav-logo span {
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color .2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        /* ─── HERO ─── */
+        .hero {
+            padding: 6rem 2rem 4rem;
+            text-align: center;
+            background: radial-gradient(ellipse at top, rgba(102, 252, 241, 0.07) 0%, transparent 65%);
+        }
+
+        .hero .badge {
+            display: inline-block;
+            background: rgba(102, 252, 241, 0.1);
+            color: var(--primary);
+            padding: .4rem 1.2rem;
+            border-radius: 30px;
+            font-size: .85rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero h1 {
+            font-size: 3.8rem;
+            font-weight: 900;
+            color: var(--pure);
+            margin-bottom: 1rem;
+            line-height: 1.1;
+        }
+
+        .hero h1 span {
+            color: var(--primary);
+        }
+
+        .hero p {
+            font-size: 1.15rem;
+            opacity: .75;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* ─── LAYOUT ─── */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        /* ─── SECTION TITLES ─── */
+        .section-title {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--pure);
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .section-title .icon {
+            font-size: 1.8rem;
+        }
+
+        .section-title span {
+            color: var(--primary);
+        }
+
+        /* ─── CARDS ─── */
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .card h3 {
+            font-size: 1.2rem;
+            color: var(--pure);
+            margin-bottom: .75rem;
+        }
+
+        .card p {
+            font-size: .95rem;
+        }
+
+        /* ─── FUNCTION TABLE ─── */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        thead th {
+            text-align: left;
+            padding: .85rem 1rem;
+            background: var(--surface2);
+            color: var(--primary);
+            font-size: .85rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        thead th:first-child {
+            border-radius: 8px 0 0 8px;
+        }
+
+        thead th:last-child {
+            border-radius: 0 8px 8px 0;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid var(--border);
+        }
+
+        tbody tr:hover {
+            background: rgba(255, 255, 255, .02);
+        }
+
+        tbody td {
+            padding: .85rem 1rem;
+            font-size: .95rem;
+            vertical-align: top;
+        }
+
+        tbody td:first-child {
+            color: var(--pure);
+            font-weight: 600;
+        }
+
+        .role-badge {
+            display: inline-block;
+            padding: .2rem .7rem;
+            border-radius: 20px;
+            font-size: .78rem;
+            font-weight: 700;
+        }
+
+        .role-manager {
+            background: rgba(102, 252, 241, .12);
+            color: var(--primary);
+        }
+
+        .role-viewer {
+            background: rgba(251, 191, 36, .12);
+            color: var(--warn);
+        }
+
+        .role-both {
+            background: rgba(34, 197, 94, .12);
+            color: var(--success);
+        }
+
+        /* ─── CODE BLOCKS ─── */
+        .code-block {
+            background: var(--code-bg);
+            border: 1px solid rgba(255, 255, 255, .06);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: .88rem;
+            overflow-x: auto;
+            position: relative;
+        }
+
+        .code-block .cmt {
+            color: #5c6370;
+            font-style: italic;
+        }
+
+        .code-block .cmd {
+            color: var(--primary);
+        }
+
+        .code-block .path {
+            color: var(--warn);
+        }
+
+        /* ─── STEPS ─── */
+        .steps {
+            counter-reset: step;
+        }
+
+        .step-item {
+            display: grid;
+            grid-template-columns: 56px 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            align-items: start;
+        }
+
+        .step-item::before {
+            counter-increment: step;
+            content: counter(step);
+            width: 56px;
+            height: 56px;
+            background: var(--surface2);
+            border: 2px solid var(--primary);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.3rem;
+            font-weight: 900;
+            color: var(--primary);
+            flex-shrink: 0;
+        }
+
+        .step-item h4 {
+            font-size: 1.05rem;
+            color: var(--pure);
+            margin-bottom: .4rem;
+        }
+
+        .step-item p {
+            font-size: .93rem;
+        }
+
+        /* ─── ALERT BOXES ─── */
+        .alert {
+            padding: 1.2rem 1.5rem;
+            border-radius: 12px;
+            margin: 1.25rem 0;
+            border-left: 4px solid;
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        .alert-icon {
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+
+        .alert.info {
+            background: rgba(102, 252, 241, .07);
+            border-color: var(--primary);
+        }
+
+        .alert.warn {
+            background: rgba(251, 191, 36, .07);
+            border-color: var(--warn);
+        }
+
+        .alert.danger {
+            background: rgba(239, 68, 68, .07);
+            border-color: var(--danger);
+        }
+
+        .alert.success {
+            background: rgba(34, 197, 94, .07);
+            border-color: var(--success);
+        }
+
+        .alert strong {
+            color: var(--pure);
+        }
+
+        /* ─── LAN DIAGRAM ─── */
+        .lan-diagram {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin: 2rem 0;
+            align-items: center;
+        }
+
+        .lan-box {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem 1.5rem;
+            text-align: center;
+            min-width: 140px;
+        }
+
+        .lan-box .icon {
+            font-size: 2rem;
+            display: block;
+            margin-bottom: .5rem;
+        }
+
+        .lan-box .label {
+            font-size: .85rem;
+            color: var(--text);
+        }
+
+        .lan-box .url {
+            font-size: .8rem;
+            color: var(--primary);
+            font-family: 'JetBrains Mono';
+            margin-top: .3rem;
+        }
+
+        .lan-arrow {
+            font-size: 1.5rem;
+            color: var(--primary-dim);
+        }
+
+        /* ─── GRID ─── */
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        /* ─── FOOTER ─── */
+        footer {
+            text-align: center;
+            padding: 4rem 2rem;
+            border-top: 1px solid var(--border);
+            margin-top: 4rem;
+        }
+
+        /* ─── SECTION SPACING ─── */
+        section {
+            margin-bottom: 5rem;
+        }
+
+        code {
+            background: var(--code-bg);
+            color: var(--primary);
+            font-family: 'JetBrains Mono', monospace;
+            padding: .15rem .45rem;
+            border-radius: 4px;
+            font-size: .88em;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.4rem;
+            }
+
+            .two-col {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ─────────── NAV ─────────── -->
+    <nav>
+        <div class="nav-logo">Pizza & Ice Cream <span>Club AI</span></div>
+        <div class="nav-links">
+            <a href="#functions">Functions</a>
+            <a href="#startup">Auto-Start</a>
+            <a href="#lan">LAN Access</a>
+            <a href="#credentials">Credentials</a>
+            <a href="#troubleshoot">Troubleshoot</a>
+        </div>
+    </nav>
+
+    <!-- ─────────── HERO ─────────── -->
+    <div class="hero">
+        <div class="badge">📋 Operations Manual</div>
+        <h1>General <span>Functions</span> Guide</h1>
+        <p>Everything you need to know to deploy, operate, and maintain the Pizza & Ice Cream Club AI system on your
+            shop floor.</p>
+    </div>
+
+    <div class="container">
+
+        <!-- ─────────── HOW TO RUN ─────────── -->
+        <section>
+            <div class="section-title"><span class="icon">🚀</span>
+                <div>How to <span>Run</span> the System</div>
+            </div>
+
+            <div class="two-col">
+                <div class="card">
+                    <h3>▶ Option 1 — WATCHDOG (Recommended)</h3>
+                    <p>This is the best way to run the AI on your shop-floor PC. If the app ever crashes, it
+                        automatically restarts within 5 seconds.</p>
+                    <div class="code-block">
+                        <span class="cmt"># Simply double-click:</span><br>
+                        <span class="path">PizzaVMS\</span><br>
+                        <span class="cmd"> → WATCHDOG.bat</span>
+                    </div>
+                    <p>A black console window will open showing the system status. <strong>Do not close this
+                            window.</strong></p>
+                </div>
+                <div class="card">
+                    <h3>▶ Option 2 — Direct EXE</h3>
+                    <p>For a one-time manual launch, double-click the main executable directly.</p>
+                    <div class="code-block">
+                        <span class="path">PizzaVMS\</span><br>
+                        <span class="cmd"> → PizzaVMS.exe</span>
+                    </div>
+                    <p>Once you see <code>Uvicorn running on http://0.0.0.0:8040</code> in the console, the system is
+                        ready.</p>
+                </div>
+            </div>
+
+            <div class="alert info">
+                <div class="alert-icon">ℹ️</div>
+                <div><strong>After launching:</strong> Open any browser on the same PC and go to
+                    <code>http://localhost:8040</code> to access the dashboard.
+                </div>
+            </div>
+        </section>
+
+        <!-- ─────────── AUTO-START ON WINDOWS BOOT ─────────── -->
+        <section id="startup">
+            <div class="section-title"><span class="icon">⚡</span>
+                <div>Auto-Start on <span>Windows Boot</span></div>
+            </div>
+
+            <p style="margin-bottom: 1.5rem;">To make the AI launch <strong>automatically</strong> every time the
+                shop-floor PC turns on or restarts, follow these steps:</p>
+
+            <div class="steps">
+                <div class="step-item">
+                    <div></div>
+                    <div>
+                        <h4>Create a Shortcut of WATCHDOG.bat</h4>
+                        <p>Right-click on <code>WATCHDOG.bat</code> → select <strong>"Create Shortcut"</strong>. A new
+                            file called <em>WATCHDOG - Shortcut</em> will appear next to it.</p>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <div></div>
+                    <div>
+                        <h4>Open the Windows Startup Folder</h4>
+                        <p>Press <code>Win + R</code> on your keyboard. In the box that appears, type the following and
+                            press Enter:</p>
+                        <div class="code-block"><span class="cmd">shell:startup</span></div>
+                        <p>A folder will open — this is Windows' auto-start folder.</p>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <div></div>
+                    <div>
+                        <h4>Move the Shortcut into the Startup Folder</h4>
+                        <p>Copy the <strong>WATCHDOG - Shortcut</strong> file and paste it into the
+                            <code>shell:startup</code> folder you just opened.
+                        </p>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <div></div>
+                    <div>
+                        <h4>Test It</h4>
+                        <p>Restart the PC. After Windows loads, the Pizza Club AI should start automatically within ~30
+                            seconds. Open your browser and navigate to <code>http://localhost:8040</code>.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="alert success">
+                <div class="alert-icon">✅</div>
+                <div><strong>Result:</strong> The system is now fully autonomous. No staff member needs to manually
+                    start the AI. It will be running every time the kitchen PC powers on.</div>
+            </div>
+        </section>
+
+        <!-- ─────────── LAN ACCESS ─────────── -->
+        <section id="lan">
+            <div class="section-title"><span class="icon">🌐</span>
+                <div>LAN Access from <span>Other Devices</span></div>
+            </div>
+
+            <p style="margin-bottom: 1.5rem;">Any device on the <strong>same Wi-Fi or network</strong> (tablet, phone,
+                another PC) can view the dashboard live — no installation needed on those devices.</p>
+
+            <div class="lan-diagram">
+                <div class="lan-box">
+                    <span class="icon">🖥️</span>
+                    <div class="label">Kitchen PC</div>
+                    <div class="url">Runs PizzaClub.exe</div>
+                </div>
+                <div class="lan-arrow">──────</div>
+                <div class="lan-box" style="border-color: var(--primary);">
+                    <span class="icon">📡</span>
+                    <div class="label">WiFi Router / LAN</div>
+                    <div class="url">Same network</div>
+                </div>
+                <div class="lan-arrow">──────</div>
+                <div class="lan-box">
+                    <span class="icon">📱</span>
+                    <div class="label">Manager's Tablet</div>
+                    <div class="url">192.168.x.x:8040</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Step 1 — Find the Kitchen PC's IP Address</h3>
+                <p>On the kitchen PC, press <code>Win + R</code>, type <code>cmd</code> and press Enter. Then type:</p>
+                <div class="code-block"><span class="cmd">ipconfig</span></div>
+                <p>Look for <strong>IPv4 Address</strong> under your Wi-Fi or Ethernet adapter. It will look like:
+                    <code>192.168.1.105</code>
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>Step 2 — Recommended: Set a Static IP (Never Changing)</h3>
+                <p>By default, routers can change the PC's IP on every restart. To prevent this, assign a <strong>static
+                        IP</strong> so the dashboard URL is always the same.</p>
+                <p style="margin-top: .75rem;">On the kitchen PC go to: <strong>Settings → Network → Ethernet/Wi-Fi → IP
+                        Settings → Edit → Manual</strong></p>
+                <div class="code-block">
+                    <span class="cmt"># Example static IP settings</span><br>
+                    IP Address: <span class="cmd">192.168.1.200</span><br>
+                    Subnet Mask: <span class="cmd">255.255.255.0</span><br>
+                    Gateway: <span class="cmd">192.168.1.1</span> <span class="cmt">(your router IP)</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Step 3 — Access from Any Device on the Network</h3>
+                <p>On any phone, tablet, or PC on the same Wi-Fi, open a browser and type:</p>
+                <div class="code-block"><span class="cmd">http://192.168.1.200:8040</span> <span class="cmt">(replace
+                        with your actual IP)</span></div>
+                <p>The Pizza Club login page will appear. Login with the Viewer account to watch the live dashboard.</p>
+            </div>
+
+            <div class="alert warn">
+                <div class="alert-icon">⚠️</div>
+                <div><strong>Firewall Note:</strong> If other devices can't connect, Windows Firewall may be blocking
+                    port 8040. Go to <strong>Windows Defender Firewall → Allow an app or feature</strong> and allow
+                    <code>PizzaVMS.exe</code>, or add an inbound rule for port 8040.
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>🌍 Remote Access (from OUTSIDE the shop — via Internet)</h3>
+                <p>For monitoring from home or another branch over the internet, use the built-in Ngrok feature.</p>
+                <p style="margin-top: .75rem;">While the system is running, double-click
+                    <code>START_REMOTE_ACCESS.bat</code> — or click the <strong>"GET REMOTE LINK"</strong> button on the
+                    dashboard. A temporary <code>https://xxxx.ngrok.io</code> URL will be generated you can share with
+                    anyone worldwide.
+                </p>
+            </div>
+        </section>
+
+        <!-- ─────────── CREDENTIALS ─────────── -->
+        <section id="credentials">
+            <div class="section-title"><span class="icon">🔐</span>
+                <div>User Roles & <span>Credentials</span></div>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Role</th>
+                        <th>Default Username</th>
+                        <th>Default Password</th>
+                        <th>Access Level</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="role-badge role-manager">Manager</span></td>
+                        <td><code>admin</code></td>
+                        <td><code>CHANGE_ME</code></td>
+                        <td>Full access — Dashboard, Analytics, Settings, Reset Counter</td>
+                    </tr>
+                    <tr>
+                        <td><span class="role-badge role-viewer">Viewer</span></td>
+                        <td><code>viewer</code></td>
+                        <td><code>CHANGE_ME</code></td>
+                        <td>View-only — Dashboard & Analytics. Cannot change settings.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="alert info" style="margin-top: 1.5rem;">
+                <div class="alert-icon">💡</div>
+                <div><strong>Changing Credentials:</strong> Login as Manager → go to <strong>Settings → User
+                        Accounts</strong> → enter new username/password and click <strong>Save All Settings</strong>.
+                </div>
+            </div>
+        </section>
+
+        <!-- ─────────── ALL FUNCTIONS ─────────── -->
+        <section id="functions">
+            <div class="section-title"><span class="icon">🎛️</span>
+                <div>All System <span>Functions</span></div>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>Where to Find It</th>
+                        <th>Access</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>🔴 Live Camera Feed</td>
+                        <td>Dashboard</td>
+                        <td><span class="role-badge role-both">Both</span></td>
+                        <td>Real-time video stream with counting line overlay from IP or USB camera.</td>
+                    </tr>
+                    <tr>
+                        <td>🍕 Pizza Counter</td>
+                        <td>Dashboard sidebar</td>
+                        <td><span class="role-badge role-both">Both</span></td>
+                        <td>Shows total pizzas counted for the current day in real time.</td>
+                    </tr>
+                    <tr>
+                        <td>⚡ Live Rate (per hour)</td>
+                        <td>Dashboard sidebar</td>
+                        <td><span class="role-badge role-both">Both</span></td>
+                        <td>Current pizzas-per-hour production rate, updated live.</td>
+                    </tr>
+                    <tr>
+                        <td>🎯 Daily Goal Ring</td>
+                        <td>Dashboard sidebar</td>
+                        <td><span class="role-badge role-both">Both</span></td>
+                        <td>Visual progress ring showing % of daily pizza target achieved.</td>
+                    </tr>
+                    <tr>
+                        <td>⏱️ Hourly Breakdown</td>
+                        <td>Dashboard sidebar</td>
+                        <td><span class="role-badge role-both">Both</span></td>
+                        <td>List of how many pizzas were produced each hour today.</td>
+                    </tr>
+                    <tr>
+                        <td>♻️ Reset Counter</td>
+                        <td>Dashboard</td>
+                        <td><span class="role-badge role-manager">Manager</span></td>
+                        <td>Resets today's pizza count to zero (e.g. at shift start).</td>
+                    </tr>
+                    <tr>
+                        <td>📊 Analytics Calendar</td>
+                        <td>Analytics page</td>
+                        <td><span class="role-badge role-both">Both</span></td>
+                        <td>Click any past date to see the hourly bar chart for that day's production.</td>
+                    </tr>
+                    <tr>
+                        <td>🏆 Best / Quietest Day</td>
+                        <td>Analytics page</td>
+                        <td><span class="role-badge role-both">Both</span></td>
+                        <td>Automatically calculated from historical data stored in pizza_logs.json.</td>
+                    </tr>
+                    <tr>
+                        <td>📥 Export to CSV</td>
+                        <td>Analytics page</td>
+                        <td><span class="role-badge role-both">Both</span></td>
+                        <td>Downloads all hourly production data for the selected date as a spreadsheet.</td>
+                    </tr>
+                    <tr>
+                        <td>🚨 Idle Alert (30 min)</td>
+                        <td>Automatic</td>
+                        <td><span class="role-badge role-both">Both</span></td>
+                        <td>If 0 pizzas are detected for 30 minutes while the system is running, a visual alert and
+                            notification fires.</td>
+                    </tr>
+                    <tr>
+                        <td>📲 WhatsApp Alerts</td>
+                        <td>Settings → Notifications</td>
+                        <td><span class="role-badge role-manager">Manager</span></td>
+                        <td>Sends idle warnings and shift summaries to a configured WhatsApp number via CallMeBot API.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>✈️ Telegram Alerts</td>
+                        <td>Settings → Notifications</td>
+                        <td><span class="role-badge role-manager">Manager</span></td>
+                        <td>Sends idle warnings and shift summaries to a configured Telegram Bot & Chat ID.</td>
+                    </tr>
+                    <tr>
+                        <td>📋 Send Shift Summary</td>
+                        <td>Dashboard</td>
+                        <td><span class="role-badge role-manager">Manager</span></td>
+                        <td>Manually trigger an end-of-shift report to WhatsApp/Telegram with hourly production totals.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>🌐 Get Remote Link</td>
+                        <td>Dashboard</td>
+                        <td><span class="role-badge role-manager">Manager</span></td>
+                        <td>Generates a public Ngrok URL to view the dashboard from anywhere in the world.</td>
+                    </tr>
+                    <tr>
+                        <td>📷 Camera Configuration</td>
+                        <td>Settings</td>
+                        <td><span class="role-badge role-manager">Manager</span></td>
+                        <td>Set camera IP (or <code>0</code> for USB), brand (Hikvision/Dahua etc.), username &
+                            password.</td>
+                    </tr>
+                    <tr>
+                        <td>📏 Counting Line</td>
+                        <td>Settings (Live preview)</td>
+                        <td><span class="role-badge role-manager">Manager</span></td>
+                        <td>Drag the slider to reposition the green counting line over the camera feed in real time.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>🎯 Confidence Threshold</td>
+                        <td>Settings</td>
+                        <td><span class="role-badge role-manager">Manager</span></td>
+                        <td>How certain the AI must be before counting a pizza (default 50%). Raise if false positives
+                            occur.</td>
+                    </tr>
+                    <tr>
+                        <td>🎯 Daily Target</td>
+                        <td>Settings</td>
+                        <td><span class="role-badge role-manager">Manager</span></td>
+                        <td>Set the daily pizza production goal (default 500). Used to drive the progress ring.</td>
+                    </tr>
+                    <tr>
+                        <td>🏪 Branch Name</td>
+                        <td>Settings</td>
+                        <td><span class="role-badge role-manager">Manager</span></td>
+                        <td>Tag this location (e.g. "Main Branch") so all reports and alerts are correctly identified.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>👥 User Accounts</td>
+                        <td>Settings → User Accounts</td>
+                        <td><span class="role-badge role-manager">Manager</span></td>
+                        <td>Change the username and/or password for both the Manager and Viewer accounts.</td>
+                    </tr>
+                    <tr>
+                        <td>📝 Audit Log</td>
+                        <td>audit_log.json (folder)</td>
+                        <td><span class="role-badge role-manager">Manager</span></td>
+                        <td>Auto-generated file logging every login, logout, reset, and settings change with timestamp.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>♻️ Watchdog Auto-Restart</td>
+                        <td>WATCHDOG.bat</td>
+                        <td><span class="role-badge role-both">Both</span></td>
+                        <td>If the EXE crashes for any reason, it automatically restarts within 5 seconds.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- ─────────── TROUBLESHOOT ─────────── -->
+        <section id="troubleshoot">
+            <div class="section-title"><span class="icon">🔧</span>
+                <div><span>Troubleshooting</span> Quick Guide</div>
+            </div>
+
+            <div class="two-col">
+                <div class="card">
+                    <h3>❌ Page won't load / "Connection refused"</h3>
+                    <p>The app may still be starting up. Wait 30 seconds after launching and try again. If still
+                        failing, check that <code>PizzaClub.exe</code> is running in Task Manager under the Processes
+                        tab.</p>
+                </div>
+                <div class="card">
+                    <h3>📷 Camera feed is black</h3>
+                    <p>Go to <strong>Settings</strong> and confirm the Camera IP. For USB cameras, the value must be
+                        <code>0</code>. For IP cameras, confirm the RTSP stream URL and that the camera is powered on.
+                    </p>
+                </div>
+                <div class="card">
+                    <h3>🔔 Notifications not sending</h3>
+                    <p>Ensure your <strong>WhatsApp phone number</strong> includes the country code (e.g.
+                        <code>+2348012345678</code>) and your <strong>CallMeBot API key</strong> is correct. Send a test
+                        via the <em>Send Test Notification</em> button in Settings.
+                    </p>
+                </div>
+                <div class="card">
+                    <h3>🌐 Can't access from another device on LAN</h3>
+                    <p>Windows Firewall may be blocking port 8000. Go to <strong>Windows Defender Firewall → Advanced
+                            Settings → Inbound Rules → New Rule</strong> and add a rule for <code>Port 8000</code>.</p>
+                </div>
+                <div class="card">
+                    <h3>⚡ Lots of false pizza counts</h3>
+                    <p>Go to <strong>Settings</strong> and increase the <strong>Confidence Threshold</strong> (e.g. from
+                        50% to 70%). Also check the counting line position — it should cross only where real pizzas
+                        pass.</p>
+                </div>
+                <div class="card">
+                    <h3>🔑 Forgot manager password</h3>
+                    <p>Open <code>config.json</code> in the application folder using Notepad. Find the
+                        <code>"users"</code> section and manually type in a new value for the <code>"password"</code>
+                        field. Save the file and restart the app.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- ─────────── FOOTER ─────────── -->
+    <footer>
+        <div style="font-size: 1.5rem; font-weight: 900; color: var(--pure); margin-bottom: .5rem;">🍕 Pizza & Ice Cream
+            Club AI</div>
+        <p>Operations Guide v2.1 — Engineered by Vexel Innovations</p>
+        <p style="margin-top: 1.5rem; font-size: .8rem; opacity: .3; font-family: 'JetBrains Mono';">PIZZA-CLUB-FAST
+            v2.1.0 | © 2026</p>
+    </footer>
+
+</body>
+
+</html>

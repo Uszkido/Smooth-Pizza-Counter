@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Technical Architecture | Pizza & Ice Cream Club AI</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=JetBrains+Mono&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0b0c10;
+            --surface: #1f2833;
+            --primary: #66fcf1;
+            --secondary: #45a29e;
+            --text: #c5c6c7;
+            --pure: #ffffff;
+            --code-bg: #111;
+            --border: rgba(255, 255, 255, 0.05);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 5rem;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            color: var(--pure);
+            margin-bottom: 1rem;
+            font-weight: 800;
+        }
+
+        h1 span {
+            color: var(--primary);
+        }
+
+        .badge {
+            background: rgba(102, 252, 241, 0.1);
+            color: var(--primary);
+            padding: 0.5rem 1rem;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        /* Technical Grid */
+        .tech-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 5rem;
+        }
+
+        .tech-card {
+            background: var(--surface);
+            padding: 2.5rem;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            color: var(--pure);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        h2::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--primary);
+            border-radius: 50%;
+        }
+
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            background: var(--code-bg);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            color: var(--primary);
+        }
+
+        /* Flow Section */
+        .flow-section {
+            background: rgba(255, 255, 255, 0.02);
+            padding: 3rem;
+            border-radius: 30px;
+            margin-bottom: 5rem;
+        }
+
+        .step {
+            display: grid;
+            grid-template-columns: 100px 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .step::after {
+            content: '';
+            position: absolute;
+            left: 50px;
+            top: 70px;
+            bottom: -50px;
+            width: 1px;
+            background: rgba(102, 252, 241, 0.2);
+        }
+
+        .step:last-child::after {
+            display: none;
+        }
+
+        .step-num {
+            width: 100px;
+            height: 100px;
+            background: var(--bg);
+            border: 4px solid var(--primary);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--primary);
+            z-index: 10;
+        }
+
+        /* Code Block Mockup */
+        .code-block {
+            background: var(--code-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .keyword {
+            color: #c678dd;
+        }
+
+        .func {
+            color: #61afef;
+        }
+
+        .string {
+            color: #98c379;
+        }
+
+        .comment {
+            color: #5c6370;
+            font-style: italic;
+        }
+
+        footer {
+            text-align: center;
+            opacity: 0.5;
+            padding: 4rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <div class="badge">V3.0 TECHNICAL OVERVIEW</div>
+            <h1>Full-Stack <span>AI Architecture</span></h1>
+            <p style="font-size: 1.2rem; max-width: 800px; margin: 0 auto; opacity: 0.7;">An in-depth look at the neural
+                networks, backend subroutines, and frontend engineering powering the Pizza & Ice Cream Club system.</p>
+        </header>
+
+        <!-- BACKEND STACK -->
+        <div class="tech-grid">
+            <div class="tech-card">
+                <h2>The <span>Python</span> Core</h2>
+                <p>The system is built on <strong>Python 3.11+</strong>, utilizing the <strong>FastAPI</strong>
+                    framework for high-throughput asynchronous communication. Unlike traditional synchronous servers,
+                    FastAPI allows us to stream video and handle API requests for counts without blocking the main event
+                    loop.</p>
+                <div class="code-block">
+                    <span class="comment"># Scalable async endpoints</span><br>
+                    <span class="keyword">@app</span>.<span class="func">get</span>(<span
+                        class="string">"/api/stats"</span>)<br>
+                    <span class="keyword">async def</span> <span class="func">get_analytics</span>():<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span> <span
+                        class="func">calculate_shift_kpi</span>()
+                </div>
+            </div>
+            <div class="tech-card">
+                <h2>The <span>OpenCV</span> Bridge</h2>
+                <p>We use <strong>OpenCV</strong> (Open Source Computer Vision Library) to capture frames from RTSP
+                    (Hikvision/Dahua) and USB streams. A dedicated background thread extracts frames at <strong>25
+                        FPS</strong>, ensuring the AI always looks at the "present" with zero lag.</p>
+            </div>
+        </div>
+
+        <!-- AI MODEL -->
+        <div class="flow-section">
+            <div class="step">
+                <div class="step-num">01</div>
+                <div>
+                    <h2>The <span>YOLOv8</span> Detection Model</h2>
+                    <p>At the center of the intelligence is <strong>YOLOv8 (You Only Look Once)</strong>. This
+                        convolutional neural network was trained on thousands of variations of oven-baked pizzas to
+                        identify them by their specific textures, shapes, and geometry.</p>
+                    <p><strong>Training Process:</strong> The model was taught using annotated datasets that include
+                        varying lighting conditions (bright kitchens vs dim evenings), ensuring 95%+ accuracy across
+                        different store locations.</p>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-num">02</div>
+                <div>
+                    <h2>Counting <span>Trajectory</span> Logic</h2>
+                    <p>Instead of simple detection, the system uses a <strong>Tracking Logic</strong>. Each object is
+                        assigned a unique ID. We calculate the trajectory of these IDs. Only when a "Pizza" ID crosses
+                        our virtual <strong>Counting Line (Y-Coordinate)</strong> from top to bottom is a count
+                        incremented.</p>
+                    <p>This prevents double-counting if a pizza is adjusted near the mouth of the oven.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- FRONTEND & DB -->
+        <div class="tech-grid">
+            <div class="tech-card">
+                <h2>Persistent <span>JSON</span> Database</h2>
+                <p>To avoid the overhead of heavy SQL databases, we use a structured <strong>JSON-based Data
+                        Store</strong>. This ensures portability and blazing fast reads for the Analytics dashboard.
+                    Production data is stored hourly to allow shift-based performance mapping.</p>
+            </div>
+            <div class="tech-card">
+                <h2>Modern <span>PWA</span> Frontend</h2>
+                <p>The interface is built with <strong>HTML5, CSS3 (Vanilla), and ES6+ JavaScript</strong>. We use
+                    <strong>Chart.js</strong> for real-time data visualization. The entire dashboard is designed as a
+                    Progressive Web App (PWA), meaning it can be "installed" on a tablet or mobile phone for one-tap
+                    access by the store manager.
+                </p>
+            </div>
+        </div>
+
+        <section style="text-align: center; margin-top: 5rem;">
+            <h2>The Integrated <span>Process Flow</span></h2>
+            <p style="margin-bottom: 3rem;">Camera → OpenCV Thread → YOLO Inference → Trajectory Logic → JSON DB →
+                FastAPI Server → Dashboard (JS/Charts)</p>
+            <div
+                style="background: var(--surface); padding: 4rem; border-radius: 40px; border: 1px solid var(--border);">
+                <p style="font-size: 1.5rem; color: #fff; font-weight: 300; font-style: italic;">"Turning raw camera
+                    pixels into actionable business insights through state-of-the-art computer vision."</p>
+            </div>
+        </section>
+
+        <footer>
+            <div style="font-weight: 900; color: #fff;">Pizza & Ice Cream Club AI</div>
+            <p>Vexel Innovations Technical Whitepaper v3.0</p>
+        </footer>
+    </div>
+</body>
+
+</html>

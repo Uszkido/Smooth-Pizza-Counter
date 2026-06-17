@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Pizza & Ice Cream Club AI | Product Ideology & Concept</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&family=Playfair+Display:wght@700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary: #66fcf1;
+            --primary-dim: #45a29e;
+            --bg: #0b0c10;
+            --card-bg: rgba(31, 40, 51, 0.95);
+            --text-main: #c5c6c7;
+            --text-pure: #ffffff;
+            --border: rgba(255, 255, 255, 0.08);
+            --accent-yellow: #fbbf24;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            background: radial-gradient(circle at center, rgba(102, 252, 241, 0.08) 0%, transparent 70%);
+            position: relative;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 4.5rem;
+            color: var(--text-pure);
+            margin-bottom: 1rem;
+            letter-spacing: -2px;
+        }
+
+        .hero h1 span {
+            color: var(--primary);
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            max-width: 800px;
+            opacity: 0.8;
+            font-weight: 300;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            animation: bounce 2s infinite;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: var(--primary);
+        }
+
+        @keyframes bounce {
+
+            0%,
+            20%,
+            50%,
+            80%,
+            100% {
+                transform: translateY(0);
+            }
+
+            40% {
+                transform: translateY(-10px);
+            }
+
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+
+        /* Sections */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .concept-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            margin-bottom: 6rem;
+        }
+
+        .content h2 {
+            font-size: 2.5rem;
+            color: var(--text-pure);
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .content h2 span {
+            color: var(--primary);
+        }
+
+        .content p {
+            font-size: 1.15rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 30px;
+            padding: 3rem;
+            border: 1px solid var(--border);
+            box-shadow: 0 50px 100px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), transparent);
+        }
+
+        /* Core Pillars */
+        .pillars {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .pillar-card {
+            background: rgba(255, 255, 255, 0.02);
+            padding: 2.5rem;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .pillar-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            background: rgba(102, 252, 241, 0.03);
+        }
+
+        .pillar-card h3 {
+            color: var(--text-pure);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .pillar-card i {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        /* ROI Section */
+        .roi-section {
+            background: linear-gradient(rgba(11, 12, 16, 0.9), rgba(11, 12, 16, 0.9)), url('https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&q=80&w=2070');
+            background-size: cover;
+            background-position: center;
+            padding: 8rem 2rem;
+            border-radius: 40px;
+            text-align: center;
+            margin: 6rem 0;
+        }
+
+        .roi-header h2 {
+            font-size: 3rem;
+            color: #fff;
+            margin-bottom: 1rem;
+        }
+
+        .roi-value {
+            font-size: 5rem;
+            font-weight: 900;
+            color: var(--accent-yellow);
+            margin: 2rem 0;
+        }
+
+        footer {
+            text-align: center;
+            padding: 4rem;
+            border-top: 1px solid var(--border);
+            margin-top: 4rem;
+        }
+
+        .footer-logo {
+            font-size: 2rem;
+            font-weight: 900;
+            color: #fff;
+            margin-bottom: 1rem;
+        }
+
+        @media (max-width: 900px) {
+
+            .concept-grid,
+            .pillars {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 3rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="hero">
+        <h1><span>Pizza & Ice Cream</span> Club AI</h1>
+        <p>The Future of Kitchen Intelligence & Production Management</p>
+        <div class="scroll-indicator">Scroll to Reveal Concept</div>
+    </div>
+
+    <div class="container">
+        <!-- THE FOUNDATION -->
+        <div class="concept-grid">
+            <div class="content">
+                <h2>The <span>Ideology:</span><br>Transparency in Real-Time</h2>
+                <p>The core philosophy behind "Pizza & Ice Cream Club AI" is simple: <strong>Management cannot fix what
+                        they cannot see.</strong></p>
+                <p>In most fast-casual restaurants, the kitchen is a "black box." Owners and managers only see the end
+                    results—wait times and sales—but they miss the critical journey of production. This system
+                    transforms the kitchen into a transparent, data-driven environment.</p>
+            </div>
+            <div class="card">
+                <h3>The "Invisible" Manager</h3>
+                <p style="margin-top: 1rem;">Our AI acts as a 24/7 digital shift leader. It doesn't just watch; it
+                    <strong>understands</strong>. By tracking every pizza that exits the oven via computer vision, it
+                    creates an objective record of staff performance without requiring high-cost human oversight.
+                </p>
+            </div>
+        </div>
+
+        <!-- THE CONCEPT -->
+        <div class="concept-grid" style="direction: rtl;">
+            <div class="content" style="direction: ltr;">
+                <h2>The <span>Concept:</span><br>Computer Vision Accountability</h2>
+                <p>We leverage <strong>YOLOv8</strong> (You Only Look Once), the world's most advanced real-time
+                    detection model, to identify and track pizzas as they move through the production line.</p>
+                <p>This isn't just a counter; it's a <strong>Business Intelligence</strong> tool. It correlates
+                    production speed with sales to identify bottlenecks, detects equipment idling, and notifies
+                    management the second things go wrong.</p>
+            </div>
+            <div class="card" style="direction: ltr;">
+                <h3>Zero Human Interaction</h3>
+                <p style="margin-top: 1rem;">Unlike traditional POS systems where staff must manually "bump" orders, our
+                    AI requires <strong>Zero Input</strong> from the kitchen team. It tracks production automatically,
+                    ensuring the data is 100% accurate and free from human error or manipulation.</p>
+            </div>
+        </div>
+
+        <h2 style="text-align: center; font-size: 3rem; margin-top: 4rem;">The <span>Four Pillars</span> of Value</h2>
+        <div class="pillars">
+            <div class="pillar-card">
+                <i>📊</i>
+                <h3>Shift Analytics</h3>
+                <p>Hourly breakdown of production. Identify your busiest hours and staff correctly to meet demand
+                    without overpaying for labor.</p>
+            </div>
+            <div class="pillar-card">
+                <i>🚨</i>
+                <h3>Proactive Alerts</h3>
+                <p>If the oven is running but no output is detected for 30 minutes, the system alerts management via
+                    WhatsApp/Telegram to check for issues.</p>
+            </div>
+            <div class="pillar-card">
+                <i>📈</i>
+                <h3>Executive Oversight</h3>
+                <p>Managers and owners can monitor live kitchen performance from home or another branch via the secure
+                    encrypted Ngrok tunnel.</p>
+            </div>
+        </div>
+
+        <!-- ROI -->
+        <div class="roi-section">
+            <div class="roi-header">
+                <h2>The Final <span>Impact</span></h2>
+                <p style="color:rgba(255,255,255,0.7); max-width: 600px; margin: 0 auto;">By optimizing production flows
+                    and ensuring constant output during peak hours, stores using this AI see a measurable
+                    transformation.</p>
+            </div>
+            <div class="roi-value">+15% - 25%</div>
+            <p style="font-size: 1.5rem; color: #fff; font-weight: 700;">Potential Increase in Efficiency & Revenue</p>
+        </div>
+
+        <section style="margin-bottom: 6rem;">
+            <h2>The <span>Technical</span> Foundation</h2>
+            <div
+                style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2rem; text-align: center; margin-top: 2rem;">
+                <div>
+                    <strong>AI Vision</strong><br>
+                    <span style="opacity:0.6; font-size:0.9rem;">YOLOv8 Neural Network</span>
+                </div>
+                <div>
+                    <strong>High Speed</strong><br>
+                    <span style="opacity:0.6; font-size:0.9rem;">FastAPI & Threaded Pipes</span>
+                </div>
+                <div>
+                    <strong>Universal</strong><br>
+                    <span style="opacity:0.6; font-size:0.9rem;">IP & USB Camera Support</span>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <div class="footer-logo">Pizza & Ice Cream Club AI</div>
+        <p>A Vexel Innovations Concept & Intelligence Platform</p>
+        <p style="margin-top: 2rem; opacity: 0.3; font-size: 0.8rem;">© 2026 PIZZA-CLUB-FAST v3.0.0</p>
+    </footer>
+
+</body>
+
+</html>

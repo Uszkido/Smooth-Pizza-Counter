@@ -1,0 +1,30 @@
+# Virtual environments
+venv_311/
+venv_light/
+
+# Build outputs / packaged deploys
+dist/
+PizzaClub_Deploy_*/
+Test_Deploy/
+python-embed.zip
+
+# Compiled binaries
+*.exe
+!ngrok.exe.example
+
+# Logs
+*.log
+crash_output*.txt
+pizza_crash_log.txt
+pyinstaller_log.txt
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Audit/runtime data
+audit_log.json
+
+config.json
+
+main.py.bak

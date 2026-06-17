@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>Settings — Pizza &amp; Ice Cream Club VMS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap"
+        rel="stylesheet" />
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0
+        }
+
+        :root {
+            --dark: #0b0c10;
+            --bar: #0d0e14;
+            --card: #1a1d27;
+            --border: rgba(255, 255, 255, .06);
+            --accent: #66fcf1;
+            --accent2: #45a29e;
+            --text: #c5c6c7;
+            --pure: #fff;
+            --green: #4ade80;
+            --red: #ff4b2b;
+        }
+
+        html,
+        body {
+            height: 100%;
+            background: var(--dark);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            overflow: hidden
+        }
+
+        .app {
+            display: flex;
+            flex-direction: column;
+            height: 100vh
+        }
+
+        /* Top bar */
+        .topbar {
+            height: 54px;
+            background: var(--bar);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            padding: 0 18px;
+            gap: 14px;
+            flex-shrink: 0
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            text-decoration: none
+        }
+
+        .logo img {
+            height: 26px;
+            object-fit: contain
+        }
+
+        .logo .brand {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--pure);
+            white-space: nowrap
+        }
+
+        .topbar nav {
+            margin-left: auto;
+            display: flex;
+            gap: 2px
+        }
+
+        .topbar nav a {
+            padding: 6px 13px;
+            border-radius: 8px;
+            font-size: 12px;
+            text-decoration: none;
+            color: var(--text);
+            transition: background .15s, color .15s
+        }
+
+        .topbar nav a:hover {
+            background: rgba(255, 255, 255, .06);
+            color: var(--pure)
+        }
+
+        .topbar nav a.active {
+            color: var(--accent);
+            background: rgba(102, 252, 241, .07)
+        }
+
+        .btn-logout {
+            padding: 5px 13px;
+            background: rgba(255, 75, 43, .1);
+            border: 1px solid rgba(255, 75, 43, .2);
+            border-radius: 8px;
+            font-size: 12px;
+            color: var(--red);
+            text-decoration: none
+        }
+
+        .btn-logout:hover {
+            background: rgba(255, 75, 43, .2)
+        }
+
+        /* Content */
+        .content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px 24px;
+            display: flex;
+            gap: 18px
+        }
+
+        .content::-webkit-scrollbar {
+            width: 3px
+        }
+
+        .content::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, .1);
+            border-radius: 2px
+        }
+
+        .col-left {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            min-width: 0
+        }
+
+        .col-right {
+            width: 320px;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 14px
+        }
+
+        /* Section cards */
+        .section {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 18px 20px
+        }
+
+        .section-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--pure);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px
+        }
+
+        /* Form fields */
+        .form-row {
+            display: grid;
+            grid-template-columns: 140px 1fr;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px
+        }
+
+        .form-row:last-child {
+            margin-bottom: 0
+        }
+
+        .form-label {
+            font-size: 11px;
+            color: var(--text)
+        }
+
+        input[type=text],
+        input[type=password],
+        select {
+            background: rgba(0, 0, 0, .4);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 8px 12px;
+            color: var(--pure);
+            font-size: 13px;
+            font-family: 'Inter', sans-serif;
+            outline: none;
+            transition: border-color .2s, box-shadow .2s;
+            width: 100%;
+        }
+
+        input[type=text]:focus,
+        input[type=password]:focus,
+        select:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(102, 252, 241, .07)
+        }
+
+        input::placeholder {
+            color: rgba(197, 198, 199, .3)
+        }
+
+        select {
+            cursor: pointer
+        }
+
+        select option {
+            background: #1a1d27;
+            color: var(--pure)
+        }
+
+        /* Slider row */
+        .slider-row {
+            display: flex;
+            align-items: center;
+            gap: 10px
+        }
+
+        input[type=range] {
+            flex: 1;
+            -webkit-appearance: none;
+            appearance: none;
+            height: 5px;
+            background: rgba(255, 255, 255, .1);
+            border-radius: 3px;
+            outline: none;
+        }
+
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--accent);
+            cursor: pointer;
+        }
+
+        .slider-val {
+            font-size: 12px;
+            color: var(--accent);
+            font-weight: 600;
+            min-width: 36px;
+            text-align: right
+        }
+
+        /* Buttons */
+        .btn-save {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            border: none;
+            border-radius: 10px;
+            color: #000;
+            font-size: 13px;
+            font-weight: 700;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            transition: opacity .15s;
+        }
+
+        .btn-save:hover {
+            opacity: .88
+        }
+
+        .btn-save:disabled {
+            opacity: .5;
+            cursor: default
+        }
+
+        .btn-test {
+            padding: 8px 14px;
+            background: rgba(255, 255, 255, .07);
+            border: 1px solid rgba(255, 255, 255, .12);
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--pure);
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            transition: background .15s;
+        }
+
+        .btn-test:hover {
+            background: rgba(255, 255, 255, .12)
+        }
+
+        /* Audit table */
+        .audit-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 11px
+        }
+
+        .audit-table th {
+            color: var(--accent);
+            font-size: 9px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            padding: 4px 8px;
+            text-align: left;
+            border-bottom: 1px solid var(--border)
+        }
+
+        .audit-table td {
+            padding: 5px 8px;
+            white-space: nowrap
+        }
+
+        .audit-table tr:hover td {
+            background: rgba(255, 255, 255, .025)
+        }
+
+        .audit-wrap {
+            max-height: 180px;
+            overflow-y: auto
+        }
+
+        .audit-wrap::-webkit-scrollbar {
+            width: 3px
+        }
+
+        .audit-wrap::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, .1);
+            border-radius: 2px
+        }
+
+        /* Toast */
+        #toast {
+            position: fixed;
+            bottom: 22px;
+            left: 50%;
+            transform: translateX(-50%) translateY(70px);
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 11px 20px;
+            font-size: 13px;
+            color: var(--pure);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, .4);
+            transition: transform .3s ease;
+            pointer-events: none;
+            white-space: nowrap;
+            z-index: 999;
+        }
+
+        #toast.show {
+            transform: translateX(-50%) translateY(0)
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app">
+        <div class="topbar">
+            <a class="logo" href="/">
+                <img src="/static/pizza_club_logo.png" alt="" onerror="this.style.display='none'" />
+                <span class="brand">Pizza &amp; Ice Cream Club</span>
+            </a>
+            <nav>
+                <a href="/">📹 Dashboard</a>
+                <a href="/analytics">📊 Analytics</a>
+                <a href="/calibration" class="active">⚙ Settings</a>
+            </nav>
+            <a href="/logout" class="btn-logout">🔒 Logout</a>
+        </div>
+
+        <div class="content">
+            <!-- Left column -->
+            <div class="col-left">
+
+                <!-- Branch -->
+                <div class="section">
+                    <div class="section-title">🏪 Branch Identity</div>
+                    <div class="form-row">
+                        <div class="form-label">Branch Name</div>
+                        <input type="text" id="branch_name" placeholder="e.g. Old Airport" />
+                    </div>
+                    <div class="form-row">
+                        <div class="form-label">Daily Pizza Target</div>
+                        <input type="text" id="daily_target" placeholder="500" />
+                    </div>
+                </div>
+
+                <!-- Camera -->
+                <div class="section">
+                    <div class="section-title">📷 Camera Config</div>
+                    <div class="form-row">
+                        <div class="form-label">Camera IP <small style="opacity:.5">(0 = webcam)</small></div>
+                        <input type="text" id="cam_ip" placeholder="192.168.1.64 or 0" />
+                    </div>
+                    <div class="form-row">
+                        <div class="form-label">Username</div>
+                        <input type="text" id="cam_user" placeholder="admin" />
+                    </div>
+                    <div class="form-row">
+                        <div class="form-label">Password</div>
+                        <input type="password" id="cam_pass" placeholder="••••••••" />
+                    </div>
+                    <div class="form-row">
+                        <div class="form-label">RTSP Port</div>
+                        <input type="text" id="cam_port" placeholder="554" />
+                    </div>
+                    <div class="form-row">
+                        <div class="form-label">Camera Brand</div>
+                        <select id="cam_brand">
+                            <option>HIKVISION</option>
+                            <option>DAHUA</option>
+                            <option>TIANDY</option>
+                            <option>GENERIC</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- AI -->
+                <div class="section">
+                    <div class="section-title">🧠 AI &amp; Counting</div>
+                    <div class="form-row">
+                        <div class="form-label">YOLO Model File</div>
+                        <input type="text" id="yolo_model" placeholder="yolov8n.pt" />
+                    </div>
+                    <div class="form-row">
+                        <div class="form-label">Confidence</div>
+                        <div class="slider-row">
+                            <input type="range" id="confidence" min="10" max="100" value="50"
+                                oninput="document.getElementById('conf-val').textContent=(this.value/100).toFixed(2)" />
+                            <span class="slider-val" id="conf-val">0.50</span>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-label">Counting Line Y</div>
+                        <div class="slider-row">
+                            <input type="range" id="line_y" min="10" max="710" value="360"
+                                oninput="document.getElementById('line-val').textContent=this.value" />
+                            <span class="slider-val" id="line-val">360</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Notifications -->
+                <div class="section">
+                    <div class="section-title">🔔 Notifications</div>
+                    <div class="form-row">
+                        <div class="form-label">Telegram Token</div>
+                        <input type="password" id="telegram_bot_token" placeholder="bot:token…" />
+                    </div>
+                    <div class="form-row">
+                        <div class="form-label">Telegram Chat ID</div>
+                        <input type="text" id="telegram_chat_id" placeholder="-100123456789" />
+                    </div>
+                    <div class="form-row">
+                        <div class="form-label">WhatsApp Phone</div>
+                        <input type="text" id="whatsapp_phone" placeholder="+447700900000" />
+                    </div>
+                    <div class="form-row">
+                        <div class="form-label">CallMeBot API Key</div>
+                        <input type="password" id="whatsapp_apikey" placeholder="API key" />
+                    </div>
+                    <div class="form-row">
+                        <div class="form-label"></div>
+                        <button class="btn-test" onclick="testNotify()">📩 Send Test Notification</button>
+                    </div>
+                </div>
+
+                <!-- Save -->
+                <button class="btn-save" id="btn-save" onclick="saveAll()">💾 Save All Settings</button>
+            </div>
+
+            <!-- Right column -->
+            <div class="col-right">
+
+                <!-- User Accounts -->
+                <div class="section">
+                    <div class="section-title">👥 User Accounts</div>
+                    <div class="form-row">
+                        <div class="form-label">Manager Username</div>
+                        <input type="text" id="mgr_user" placeholder="admin" />
+                    </div>
+                    <div class="form-row">
+                        <div class="form-label">Manager Password</div>
+                        <input type="password" id="mgr_pass" placeholder="New password…" />
+                    </div>
+                    <div style="height:10px"></div>
+                    <div class="form-row">
+                        <div class="form-label">Viewer Username</div>
+                        <input type="text" id="view_user" placeholder="viewer" />
+                    </div>
+                    <div class="form-row">
+                        <div class="form-label">Viewer Password</div>
+                        <input type="password" id="view_pass" placeholder="New password…" />
+                    </div>
+                    <p style="font-size:10px;opacity:.4;margin-top:10px;line-height:1.5">Leave password blank to keep
+                        current. Manager can reset counter &amp; change settings.</p>
+                </div>
+
+                <!-- Audit log -->
+                <div class="section" style="flex:1">
+                    <div class="section-title">📋 Audit Log <span
+                            style="font-weight:400;opacity:.5;font-size:10px;text-transform:none;letter-spacing:0">(last
+                            40 actions)</span></div>
+                    <div class="audit-wrap">
+                        <table class="audit-table">
+                            <thead>
+                                <tr>
+                                    <th>Time</th>
+                                    <th>User</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="audit-body">
+                                <tr>
+                                    <td colspan="3" style="opacity:.3;text-align:center;padding:10px">Loading…</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="toast"></div>
+
+    <script>
+        function toast(msg, ms = 3200) {
+            const t = document.getElementById('toast'); t.textContent = msg; t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), ms);
+        }
+
+        async function loadSettings() {
+            try {
+                const d = await (await fetch('/api/config')).json();
+                document.getElementById('branch_name').value = d.branch_name ?? '';
+                document.getElementById('daily_target').value = d.daily_target ?? 500;
+                document.getElementById('cam_ip').value = d.cam_ip ?? '0';
+                document.getElementById('cam_user').value = d.cam_user ?? 'admin';
+                document.getElementById('cam_pass').value = d.cam_pass ?? '';
+                document.getElementById('cam_port').value = d.cam_port ?? '554';
+                document.getElementById('cam_brand').value = d.cam_brand ?? 'HIKVISION';
+                document.getElementById('yolo_model').value = d.yolo_model ?? 'yolov8n.pt';
+                const conf = Math.round((d.confidence ?? 0.5) * 100);
+                document.getElementById('confidence').value = conf;
+                document.getElementById('conf-val').textContent = (conf / 100).toFixed(2);
+                const ly = d.line_y ?? 360;
+                document.getElementById('line_y').value = ly;
+                document.getElementById('line-val').textContent = ly;
+                document.getElementById('telegram_bot_token').value = d.telegram_bot_token ?? '';
+                document.getElementById('telegram_chat_id').value = d.telegram_chat_id ?? '';
+                document.getElementById('whatsapp_phone').value = d.whatsapp_phone ?? '';
+                document.getElementById('whatsapp_apikey').value = d.whatsapp_apikey ?? '';
+                const users = d.users ?? {};
+                const mgrU = Object.keys(users).find(u => users[u].role === 'manager') || 'admin';
+                const viewU = Object.keys(users).find(u => users[u].role === 'viewer') || 'viewer';
+                document.getElementById('mgr_user').value = mgrU;
+                document.getElementById('view_user').value = viewU;
+            } catch (e) { toast('❌ Failed to load settings'); }
+        }
+
+        async function saveAll() {
+            const btn = document.getElementById('btn-save');
+            btn.disabled = true; btn.textContent = 'Saving…';
+            try {
+                const cfg = await (await fetch('/api/config')).json();
+                const users = cfg.users ?? {};
+                const oldMgr = Object.keys(users).find(u => users[u].role === 'manager') || 'admin';
+                const oldView = Object.keys(users).find(u => users[u].role === 'viewer') || 'viewer';
+                const newMgr = document.getElementById('mgr_user').value.trim() || oldMgr;
+                const newView = document.getElementById('view_user').value.trim() || oldView;
+                if (newMgr !== oldMgr) { users[newMgr] = { ...users[oldMgr], role: 'manager' }; delete users[oldMgr]; }
+                if (newView !== oldView) { users[newView] = { ...users[oldView], role: 'viewer' }; delete users[oldView]; }
+                const mp = document.getElementById('mgr_pass').value;
+                const vp = document.getElementById('view_pass').value;
+                if (mp) (users[newMgr] = users[newMgr] || { role: 'manager' }).password = mp;
+                if (vp) (users[newView] = users[newView] || { role: 'viewer' }).password = vp;
+
+                const payload = {
+                    branch_name: document.getElementById('branch_name').value,
+                    daily_target: parseInt(document.getElementById('daily_target').value) || 500,
+                    cam_ip: document.getElementById('cam_ip').value,
+                    cam_user: document.getElementById('cam_user').value,
+                    cam_pass: document.getElementById('cam_pass').value,
+                    cam_port: document.getElementById('cam_port').value,
+                    cam_brand: document.getElementById('cam_brand').value,
+                    yolo_model: document.getElementById('yolo_model').value,
+                    confidence: parseFloat((document.getElementById('confidence').value / 100).toFixed(2)),
+                    line_y: parseInt(document.getElementById('line_y').value),
+                    telegram_bot_token: document.getElementById('telegram_bot_token').value,
+                    telegram_chat_id: document.getElementById('telegram_chat_id').value,
+                    whatsapp_phone: document.getElementById('whatsapp_phone').value,
+                    whatsapp_apikey: document.getElementById('whatsapp_apikey').value,
+                    users,
+                };
+                const r = await fetch('/api/config', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+                const d = await r.json();
+                toast(d.status === 'success' ? '✅ Settings saved!' : '❌ Save failed');
+                loadSettings();
+            } catch (e) { toast('❌ Error saving settings'); }
+            btn.disabled = false; btn.textContent = '💾 Save All Settings';
+        }
+
+        async function testNotify() {
+            await fetch('/api/test_telegram', { method: 'POST' });
+            toast('📩 Test notification dispatched!');
+        }
+
+        async function loadAudit() {
+            try {
+                const rows = await (await fetch('/api/audit_log')).json();
+                if (!Array.isArray(rows)) { return; }
+                const tbody = document.getElementById('audit-body');
+                const recent = [...rows].reverse().slice(0, 40);
+                tbody.innerHTML = recent.length === 0
+                    ? '<tr><td colspan="3" style="opacity:.3;text-align:center;padding:10px">No audit entries</td></tr>'
+                    : recent.map(r => `<tr><td style="opacity:.6">${r.timestamp}</td><td style="color:#66fcf1">${r.user}</td><td>${r.action}</td></tr>`).join('');
+            } catch (e) { }
+        }
+
+        loadSettings();
+        loadAudit();
+    </script>
+</body>
+
+</html>

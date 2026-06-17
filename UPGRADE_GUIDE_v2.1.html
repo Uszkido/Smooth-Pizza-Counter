@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pizza & Ice Cream Club | Upgrade Guide v2.1</title>
+    <meta name="description"
+        content="Official upgrade guide for PizzaClub v2.1 — configure custom ports and video performance.">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0b0c10;
+            --card-bg: rgba(31, 40, 51, 0.75);
+            --accent: #66fcf1;
+            --accent-dim: #45a29e;
+            --text-main: #c5c6c7;
+            --text-pure: #ffffff;
+            --border-color: rgba(255, 255, 255, 0.05);
+            --green: #4ade80;
+            --orange: #fb923c;
+            --red: #ff4b2b;
+            --yellow: #fbbf24;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.7;
+        }
+
+        /* ── HEADER ── */
+        .header {
+            background: linear-gradient(135deg, rgba(31, 40, 51, 0.9) 0%, rgba(11, 12, 16, 0.95) 100%);
+            padding: 5rem 2rem 4rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -80px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(102, 252, 241, 0.06) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(102, 252, 241, 0.12);
+            color: var(--accent);
+            border: 1px solid rgba(102, 252, 241, 0.25);
+            border-radius: 50px;
+            padding: 0.35rem 1.2rem;
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+        }
+
+        .logo {
+            font-size: 2.8rem;
+            font-weight: 900;
+            color: var(--text-pure);
+            margin-bottom: 0.5rem;
+            letter-spacing: -1px;
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.7;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-top: 0.8rem;
+        }
+
+        .version-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1.8rem;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--border-color);
+            border-radius: 50px;
+            padding: 0.5rem 1.4rem;
+            font-size: 0.85rem;
+        }
+
+        .version-pill .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--green);
+            box-shadow: 0 0 8px var(--green);
+        }
+
+        /* ── NAV ── */
+        .toc {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(11, 12, 16, 0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 0.9rem 2rem;
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .toc a {
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            padding: 0.3rem 0;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .toc a:hover {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+        }
+
+        /* ── CONTAINER / SECTIONS ── */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        section {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin-bottom: 2.5rem;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35);
+            scroll-margin-top: 60px;
+        }
+
+        section.accent-border {
+            border-color: rgba(102, 252, 241, 0.3);
+        }
+
+        section.green-border {
+            border-color: rgba(74, 222, 128, 0.3);
+        }
+
+        section.orange-border {
+            border-color: rgba(251, 146, 60, 0.3);
+        }
+
+        h2 {
+            color: var(--text-pure);
+            font-size: 1.75rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1rem;
+        }
+
+        h2 .sec-num {
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: var(--accent);
+            background: rgba(102, 252, 241, 0.1);
+            padding: 0.2rem 0.7rem;
+            border-radius: 50px;
+            border: 1px solid rgba(102, 252, 241, 0.2);
+        }
+
+        h3 {
+            color: var(--text-pure);
+            font-size: 1.2rem;
+            margin: 1.8rem 0 0.7rem;
+        }
+
+        p {
+            margin-bottom: 0.9rem;
+        }
+
+        ul,
+        ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* ── CODE BLOCK ── */
+        code {
+            background: rgba(0, 0, 0, 0.55);
+            padding: 0.15rem 0.5rem;
+            border-radius: 5px;
+            color: var(--accent);
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        pre {
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(102, 252, 241, 0.12);
+            border-radius: 12px;
+            padding: 1.4rem 1.6rem;
+            margin: 1.2rem 0;
+            overflow-x: auto;
+            position: relative;
+        }
+
+        pre code {
+            background: transparent;
+            padding: 0;
+            color: var(--accent);
+            font-size: 0.92rem;
+            line-height: 1.8;
+        }
+
+        pre .cmt {
+            color: #5c6370;
+        }
+
+        pre .key {
+            color: #e06c75;
+        }
+
+        pre .val {
+            color: var(--green);
+        }
+
+        pre .str {
+            color: var(--yellow);
+        }
+
+        .copy-label {
+            position: absolute;
+            top: 0.6rem;
+            right: 1rem;
+            font-size: 0.7rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            opacity: 0.35;
+        }
+
+        /* ── HIGHLIGHT BOXES ── */
+        .highlight-box {
+            background: rgba(102, 252, 241, 0.07);
+            border-left: 4px solid var(--accent);
+            padding: 1.3rem 1.5rem;
+            border-radius: 0 12px 12px 0;
+            margin: 1.4rem 0;
+        }
+
+        .highlight-box.warn {
+            background: rgba(251, 146, 60, 0.07);
+            border-left-color: var(--orange);
+        }
+
+        .highlight-box.danger {
+            background: rgba(255, 75, 43, 0.07);
+            border-left-color: var(--red);
+        }
+
+        .highlight-box.success {
+            background: rgba(74, 222, 128, 0.07);
+            border-left-color: var(--green);
+        }
+
+        .highlight-box .hb-title {
+            font-weight: 700;
+            color: var(--text-pure);
+            margin-bottom: 0.4rem;
+            font-size: 0.95rem;
+        }
+
+        /* ── TABLE ── */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.4rem 0;
+            font-size: 0.93rem;
+        }
+
+        .data-table th {
+            background: rgba(0, 0, 0, 0.4);
+            color: var(--accent);
+            text-align: left;
+            padding: 0.75rem 1rem;
+            font-size: 0.75rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            border-bottom: 1px solid rgba(102, 252, 241, 0.15);
+        }
+
+        .data-table td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--border-color);
+            vertical-align: top;
+        }
+
+        .data-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .data-table tr:hover td {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .good {
+            color: var(--green);
+            font-weight: 600;
+        }
+
+        .warn {
+            color: var(--orange);
+            font-weight: 600;
+        }
+
+        .bad {
+            color: var(--red);
+            font-weight: 600;
+        }
+
+        /* ── STEP CARDS ── */
+        .steps {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+            margin: 1.4rem 0;
+        }
+
+        .step {
+            display: flex;
+            gap: 1.2rem;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 14px;
+            padding: 1.2rem 1.4rem;
+            border: 1px solid var(--border-color);
+            align-items: flex-start;
+        }
+
+        .step-num {
+            flex-shrink: 0;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), var(--accent-dim));
+            color: #000;
+            font-weight: 900;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .step-body {
+            flex: 1;
+        }
+
+        .step-body strong {
+            color: var(--text-pure);
+            display: block;
+            margin-bottom: 0.3rem;
+        }
+
+        /* ── CHANGE LOG PILLS ── */
+        .change-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 1.4rem 0;
+        }
+
+        .change-card {
+            background: rgba(0, 0, 0, 0.35);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 1.2rem 1.4rem;
+        }
+
+        .change-card .cc-icon {
+            font-size: 1.6rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .change-card .cc-title {
+            color: var(--text-pure);
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .change-card .cc-sub {
+            font-size: 0.85rem;
+            opacity: 0.75;
+        }
+
+        /* ── FOOTER ── */
+        .footer {
+            text-align: center;
+            padding: 3.5rem 2rem;
+            opacity: 0.7;
+            font-weight: 500;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .footer img {
+            height: 38px;
+            opacity: 0.8;
+        }
+
+        .footer .ver {
+            font-size: 0.78rem;
+            opacity: 0.45;
+            font-family: monospace;
+            margin-top: 0.3rem;
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 700px) {
+            .change-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .toc {
+                gap: 1rem;
+            }
+
+            h2 {
+                font-size: 1.4rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ═══ HEADER ═══ -->
+    <div class="header">
+        <div class="badge">📋 Official Upgrade Guide</div>
+        <div class="logo">Pizza &amp; Ice Cream <span>Club</span></div>
+        <div style="font-size:1rem; opacity:0.55; margin-top:0.3rem;">Developed by Vexel Innovations</div>
+        <div class="subtitle">Version 2.1 · Enterprise Edition</div>
+        <div class="version-pill">
+            <span class="dot"></span>
+            Custom Port Support &amp; Video Performance Patch — April 2026
+        </div>
+    </div>
+
+    <!-- ═══ STICKY NAV ═══ -->
+    <nav class="toc">
+        <a href="#overview">Overview</a>
+        <a href="#changes">What's New</a>
+        <a href="#port">Port Config</a>
+        <a href="#video">Video Speed</a>
+        <a href="#rebuild">Rebuild</a>
+        <a href="#faq">FAQ</a>
+    </nav>
+
+    <div class="container">
+
+        <!-- ═══ OVERVIEW ═══ -->
+        <section id="overview" class="accent-border">
+            <h2><span class="sec-num">INTRO</span> Overview of This Update</h2>
+            <p>
+                This document covers the two enhancements applied to <strong>PizzaClub v2.1 Enterprise</strong> in
+                April 2026. The changes are fully backward-compatible — existing installation data, logs, and camera
+                settings are preserved.
+            </p>
+
+            <div class="change-grid">
+                <div class="change-card">
+                    <div class="cc-icon">🔌</div>
+                    <div class="cc-title">Custom Port Support</div>
+                    <div class="cc-sub">Run the dashboard on any port you choose — no longer locked to
+                        <code>:8000</code>. Edit one line in <code>config.json</code>.</div>
+                </div>
+                <div class="change-card">
+                    <div class="cc-icon">🎥</div>
+                    <div class="cc-title">Smoother Video Feed</div>
+                    <div class="cc-sub">Frame throttle tightened, resize optimised, and JPEG quality raised — noticeably
+                        faster and crisper live view.</div>
+                </div>
+            </div>
+
+            <div class="highlight-box success">
+                <div class="hb-title">✅ No reinstall required</div>
+                Existing port configuration defaults to <strong>8040</strong>. If you were using <strong>8000</strong>
+                before, either update <code>config.json</code> to set <code>"app_port": 8000</code> to keep the old
+                port, or leave it at <strong>8040</strong> for the new default.
+            </div>
+        </section>
+
+        <!-- ═══ WHAT'S NEW ═══ -->
+        <section id="changes">
+            <h2><span class="sec-num">01</span> Full Change Log</h2>
+
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>File / Component</th>
+                        <th>What Changed</th>
+                        <th>Category</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>config.json</code></td>
+                        <td>New <code>"app_port"</code> field added — controls which port the server binds to</td>
+                        <td><span class="good">Port</span></td>
+                    </tr>
+                    <tr>
+                        <td><code>main.py</code> — server entry</td>
+                        <td>Reads <code>app_port</code> from config instead of hardcoded 8000</td>
+                        <td><span class="good">Port</span></td>
+                    </tr>
+                    <tr>
+                        <td><code>launcher.py</code></td>
+                        <td>Reads <code>app_port</code> from config at startup; browser opens on correct URL</td>
+                        <td><span class="good">Port</span></td>
+                    </tr>
+                    <tr>
+                        <td><code>vms_ui.py</code></td>
+                        <td>Native PyQt6 UI connects to the configured port for all API calls</td>
+                        <td><span class="good">Port</span></td>
+                    </tr>
+                    <tr>
+                        <td><code>START_REMOTE_ACCESS.bat</code></td>
+                        <td>ngrok tunnels the port read from <code>config.json</code> — no manual edits needed</td>
+                        <td><span class="good">Port</span></td>
+                    </tr>
+                    <tr>
+                        <td><code>CHANGE_PORT_AND_LAUNCH.bat</code> <em>(new)</em></td>
+                        <td>Opens the browser on the correct port automatically after launch</td>
+                        <td><span class="good">Port</span></td>
+                    </tr>
+                    <tr>
+                        <td><code>main.py</code> — frame throttle</td>
+                        <td>Minimum frame interval reduced: <code>0.03 s → 0.02 s</code> (≈50 fps cap vs. 33 fps)</td>
+                        <td><span class="warn">Video</span></td>
+                    </tr>
+                    <tr>
+                        <td><code>main.py</code> — idle sleep</td>
+                        <td>Inter-frame sleep halved: <code>10 ms → 5 ms</code> for lower latency</td>
+                        <td><span class="warn">Video</span></td>
+                    </tr>
+                    <tr>
+                        <td><code>main.py</code> — resize width</td>
+                        <td>Scale-down target: <code>1280 px → 960 px</code> — faster YOLO inference + encode</td>
+                        <td><span class="warn">Video</span></td>
+                    </tr>
+                    <tr>
+                        <td><code>main.py</code> — JPEG quality</td>
+                        <td>Stream quality raised: <code>75 → 85</code> — sharper live image</td>
+                        <td><span class="warn">Video</span></td>
+                    </tr>
+                    <tr>
+                        <td><code>BUILD_NEW_EXE.bat</code> <em>(new)</em></td>
+                        <td>One-click rebuild script so all Python changes are baked into a new <code>.exe</code></td>
+                        <td><span class="good">Build</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- ═══ PORT CONFIG ═══ -->
+        <section id="port" class="accent-border">
+            <h2><span class="sec-num">02</span> 🔌 How to Configure the Port</h2>
+
+            <p>
+                The server port is controlled by a single key in <code>config.json</code>, located in the same
+                folder as <code>PizzaClub.exe</code>. Open it with any text editor (Notepad, VS Code, etc.).
+            </p>
+
+            <h3>Step 1 — Edit <code>config.json</code></h3>
+            <p>Find the <code>"app_port"</code> key and change the number to your desired port:</p>
+
+            <pre><span class="copy-label">config.json</span><code>{
+    <span class="key">"cam_ip"</span>:      <span class="str">"192.168.1.16"</span>,
+    <span class="key">"cam_port"</span>:   <span class="str">"554"</span>,
+
+    <span class="cmt">/* ── Change this number to any FREE port ── */</span>
+    <span class="key">"app_port"</span>:   <span class="val">8040</span>,
+
+    <span class="key">"branch_name"</span>: <span class="str">"Old Airport"</span>,
+    <span class="cmt">/* ... rest of config ... */</span>
+}</code></pre>
+
+            <div class="highlight-box warn">
+                <div class="hb-title">⚠️ Pick a port that is not already in use</div>
+                Common ports to avoid: <code>80</code>, <code>443</code>, <code>3000</code>, <code>3306</code>
+                (MySQL), <code>5432</code> (PostgreSQL), <code>8080</code> (other web apps).
+                Safe choices: <code>8040</code>, <code>8050</code>, <code>8888</code>, <code>9000</code>,
+                <code>5000</code>.
+            </div>
+
+            <h3>Step 2 — Launch the App</h3>
+            <p>There are two ways to open the dashboard after editing the port:</p>
+
+            <div class="steps">
+                <div class="step">
+                    <div class="step-num">A</div>
+                    <div class="step-body">
+                        <strong>Double-click <code>CHANGE_PORT_AND_LAUNCH.bat</code></strong>
+                        This reads the port from <code>config.json</code>, starts <code>PizzaClub.exe</code>, waits 5
+                        seconds, then opens your browser directly on the correct URL — e.g.
+                        <code>http://127.0.0.1:8040</code>. Use this when the server is already listening on the right
+                        port.
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-num">B</div>
+                    <div class="step-body">
+                        <strong>Double-click <code>PizzaClub.exe</code> directly</strong>
+                        The tray app reads <code>config.json</code> and opens your browser on the
+                        configured URL automatically. This is the standard launch method.
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-num">C</div>
+                    <div class="step-body">
+                        <strong>Open browser manually</strong>
+                        Type <code>http://127.0.0.1:&lt;your_port&gt;</code> into any browser after the app starts.
+                    </div>
+                </div>
+            </div>
+
+            <h3>Remote Access (ngrok) with New Port</h3>
+            <p>
+                <code>START_REMOTE_ACCESS.bat</code> automatically reads the port from <code>config.json</code> and
+                passes it to ngrok. No manual edits to the batch file are needed.
+            </p>
+
+            <div class="highlight-box">
+                <div class="hb-title">💡 Multi-branch deployments</div>
+                Each machine can have a different <code>"app_port"</code> in its own <code>config.json</code>. This
+                allows running multiple instances on the same Windows machine — one per branch — on different ports.
+            </div>
+
+            <h3>Important: Compiled EXE vs. Source Code</h3>
+            <div class="highlight-box danger">
+                <div class="hb-title">🔴 The existing EXE has the port compiled inside it</div>
+                <p>
+                    PyInstaller freezes the Python source into the <code>.exe</code> at build time. The current
+                    <code>PizzaClub.exe</code> in this zip was compiled before the port-config feature existed, so
+                    the <em>server binding</em> inside it is still hardcoded to the old port.
+                </p>
+                <p style="margin-top: 0.6rem;">
+                    <strong>Solution:</strong> Run <code>BUILD_NEW_EXE.bat</code> from the project root to recompile.
+                    This produces a new <code>dist_FINAL\PizzaVMS\PizzaVMS.exe</code> that fully respects
+                    <code>"app_port"</code> at runtime.
+                </p>
+            </div>
+
+            <table class="data-table" style="margin-top:1.4rem;">
+                <thead>
+                    <tr>
+                        <th>Scenario</th>
+                        <th>Server Port</th>
+                        <th>Browser Opens On</th>
+                        <th>Action Required</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Existing compiled EXE, <code>app_port: 8040</code></td>
+                        <td class="bad">Old port (unchanged)</td>
+                        <td class="good">8040</td>
+                        <td>Open browser manually on old port OR rebuild</td>
+                    </tr>
+                    <tr>
+                        <td>Rebuilt EXE, <code>app_port: 8040</code></td>
+                        <td class="good">8040</td>
+                        <td class="good">8040</td>
+                        <td>✅ Full end-to-end, no manual steps</td>
+                    </tr>
+                    <tr>
+                        <td>Running from Python source (<code>main.py</code>)</td>
+                        <td class="good">Reads config</td>
+                        <td class="good">Reads config</td>
+                        <td>✅ Works immediately, no rebuild needed</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- ═══ VIDEO ═══ -->
+        <section id="video" class="green-border">
+            <h2><span class="sec-num">03</span> 🎥 Video Performance Improvements</h2>
+
+            <p>
+                The live camera feed is the most CPU-intensive component of the system. Three targeted tweaks
+                were made to the frame pipeline to reduce latency, increase throughput, and improve visual clarity.
+            </p>
+
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Before</th>
+                        <th>After</th>
+                        <th>Effect</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Frame throttle interval</td>
+                        <td class="bad">30 ms</td>
+                        <td class="good">20 ms</td>
+                        <td>Effective cap raised from ~33 fps to ~50 fps</td>
+                    </tr>
+                    <tr>
+                        <td>Idle sleep between frames</td>
+                        <td class="bad">10 ms</td>
+                        <td class="good">5 ms</td>
+                        <td>Lower inter-frame latency, more responsive feel</td>
+                    </tr>
+                    <tr>
+                        <td>Resize width (YOLO input)</td>
+                        <td class="bad">1280 px</td>
+                        <td class="good">960 px</td>
+                        <td>Faster YOLO inference + JPEG encode per frame</td>
+                    </tr>
+                    <tr>
+                        <td>JPEG stream quality</td>
+                        <td class="bad">75</td>
+                        <td class="good">85</td>
+                        <td>Noticeably sharper image in the browser viewer</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="highlight-box">
+                <div class="hb-title">💡 Why 960 px instead of 1280 px?</div>
+                The YOLO model runs at <code>imgsz=480</code> regardless — it internally downscales the frame.
+                Feeding it a 960px-wide frame rather than 1280px means less pixel data to resize internally,
+                faster memory transfers, and a smaller JPEG to compress and stream. Counting accuracy is
+                completely unaffected.
+            </div>
+
+            <h3>Additional Tips to Maximise Smoothness</h3>
+            <ul>
+                <li>Use a <strong>2MP (1080p) IP camera</strong> — 4MP streams waste CPU on decode before YOLO sees a
+                    single pixel.</li>
+                <li>Connect the camera via <strong>wired Ethernet</strong>, not Wi-Fi, to avoid RTSP dropout frames.
+                </li>
+                <li>Keep the PC <strong>plugged into power</strong> — Windows power-saving limits CPU performance on
+                    battery.</li>
+                <li>Close other browser tabs showing the live feed if only one viewer is needed.</li>
+            </ul>
+        </section>
+
+        <!-- ═══ REBUILD ═══ -->
+        <section id="rebuild" class="orange-border">
+            <h2><span class="sec-num">04</span> 🔨 Rebuilding the EXE</h2>
+
+            <p>
+                Run this once to produce a new <code>PizzaVMS.exe</code> that fully embeds all the v2.1 changes.
+                You need the <strong>project source folder</strong> (where <code>main.py</code> lives) — not the
+                distribution zip.
+            </p>
+
+            <div class="steps">
+                <div class="step">
+                    <div class="step-num">1</div>
+                    <div class="step-body">
+                        <strong>Open the project root folder</strong>
+                        This is the folder containing <code>main.py</code>, <code>launcher.py</code>,
+                        <code>vms_ui.py</code>, and the <code>venv_311</code> Python environment.
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-num">2</div>
+                    <div class="step-body">
+                        <strong>Set your desired port in <code>config.json</code></strong>
+                        <pre><code><span class="key">"app_port"</span>: <span class="val">8040</span></code></pre>
+                        This value will be compiled into the new EXE as the default, but can still be overridden
+                        by editing <code>config.json</code> after deployment.
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-num">3</div>
+                    <div class="step-body">
+                        <strong>Double-click <code>BUILD_NEW_EXE.bat</code></strong>
+                        The script activates <code>venv_311</code>, cleans old build artifacts, and runs
+                        PyInstaller using the <code>PizzaVMS_Final.spec</code> build recipe. Takes 3–5 minutes.
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-num">4</div>
+                    <div class="step-body">
+                        <strong>Find the new EXE at <code>dist_FINAL\PizzaVMS\</code></strong>
+                        Replace the old <code>PizzaClub.exe</code> / <code>PizzaVMS.exe</code> in your deployment
+                        folder with the newly built one. Copy <code>config.json</code> and your data files alongside it.
+                    </div>
+                </div>
+            </div>
+
+            <div class="highlight-box warn">
+                <div class="hb-title">⚠️ Keep config.json separate from the bundle</div>
+                <code>config.json</code> must always sit <strong>next to the .exe</strong>, not inside the
+                <code>_internal/</code> folder. This way you can change port, camera settings, and credentials
+                without rebuilding — just edit the file and restart the app.
+            </div>
+        </section>
+
+        <!-- ═══ FAQ ═══ -->
+        <section id="faq">
+            <h2><span class="sec-num">05</span> ❓ Frequently Asked Questions</h2>
+
+            <h3>The browser says "This site can't be reached" after I change the port</h3>
+            <p>
+                This usually means the existing <code>PizzaClub.exe</code> is still listening on the old compiled
+                port. Either open <code>http://127.0.0.1:8000</code> (the original port), or rebuild the EXE
+                using <code>BUILD_NEW_EXE.bat</code> so the new port is baked in.
+            </p>
+
+            <h3>Can I run two instances on the same PC?</h3>
+            <p>
+                Yes. Copy the entire application folder to a second location, give each its own
+                <code>config.json</code> with a different <code>"app_port"</code>, and both servers will run
+                independently. Useful for monitoring two branches from one machine.
+            </p>
+
+            <h3>The video is smoother but counting accuracy looks the same — is that right?</h3>
+            <p>
+                Yes. The YOLO model still runs at <code>imgsz=480</code> which is completely unrelated to the
+                display resolution. More frames per second means <strong>more detection opportunities</strong>
+                for fast-moving objects — counting accuracy can only improve, never decrease.
+            </p>
+
+            <h3>The remote ngrok link still showing the old port</h3>
+            <p>
+                Close ngrok and re-run <code>START_REMOTE_ACCESS.bat</code>. The batch script now reads
+                <code>"app_port"</code> from <code>config.json</code> each time it runs, so a fresh start will
+                pick up the new value automatically.
+            </p>
+
+            <h3>How do I revert to port 8000?</h3>
+            <p>Open <code>config.json</code> and change <code>"app_port"</code> back to <code>8000</code>. If you
+                have the old compiled EXE, it will already be listening on 8000 — no rebuild needed.</p>
+
+            <h3>Where are my logs and audit records stored?</h3>
+            <p>
+                <code>pizza_logs.json</code> and <code>audit_log.json</code> are always stored <strong>next to
+                    the .exe</strong> in the same folder. They are never inside <code>_internal/</code> and are safe
+                across rebuilds — simply copy them to the new deployment folder.
+            </p>
+        </section>
+
+    </div>
+
+    <!-- ═══ FOOTER ═══ -->
+    <div class="footer">
+        <img src="./static/logo_white.png" alt="Vexel Innovations" onerror="this.style.display='none'">
+        <div>Engineered &amp; Packaged Professionally by Vexel Innovations</div>
+        <div class="ver">v2.1.0 · PIZZA-CLUB-ENTERPRISE · April 2026</div>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Login — Pizza & Ice Cream Club VMS</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --dark:#0b0c10;--card:#1a1d27;--border:rgba(255,255,255,0.07);
+      --accent:#66fcf1;--accent2:#45a29e;--text:#c5c6c7;--pure:#fff;--red:#ff4b2b;
+    }
+    body{
+      background:var(--dark);color:var(--text);font-family:'Inter',sans-serif;
+      min-height:100vh;display:flex;align-items:center;justify-content:center;
+      position:relative;overflow:hidden;
+    }
+    body::before{
+      content:'';position:fixed;inset:0;pointer-events:none;
+      background:
+        radial-gradient(ellipse 90% 70% at 15% 15%,rgba(102,252,241,.06) 0%,transparent 55%),
+        radial-gradient(ellipse 70% 60% at 85% 85%,rgba(69,162,158,.05) 0%,transparent 55%);
+    }
+    .wrap{width:100%;max-width:420px;padding:20px;display:flex;flex-direction:column;align-items:center;gap:18px;position:relative;z-index:1}
+    .card{
+      width:100%;background:var(--card);border:1px solid var(--border);
+      border-radius:20px;padding:40px 36px;display:flex;flex-direction:column;gap:18px;
+      box-shadow:0 24px 80px rgba(0,0,0,.55);
+    }
+    .logo-area{display:flex;flex-direction:column;align-items:center;gap:8px;margin-bottom:4px}
+    .logo-area img{height:58px;object-fit:contain}
+    .logo-area .brand{font-size:19px;font-weight:900;color:var(--pure);letter-spacing:-.5px}
+    .logo-area .sub{font-size:10px;color:var(--accent);letter-spacing:3px;text-transform:uppercase}
+    .field{display:flex;flex-direction:column;gap:6px}
+    .field label{font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:var(--text)}
+    input{
+      background:rgba(0,0,0,.4);border:1px solid var(--border);border-radius:10px;
+      padding:12px 14px;color:var(--pure);font-size:14px;font-family:'Inter',sans-serif;
+      outline:none;transition:border-color .2s,box-shadow .2s;width:100%;
+    }
+    input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(102,252,241,.08)}
+    input::placeholder{color:rgba(197,198,199,.3)}
+    .btn{
+      width:100%;padding:13px;background:linear-gradient(135deg,var(--accent),var(--accent2));
+      border:none;border-radius:10px;color:#000;font-size:14px;font-weight:700;
+      font-family:'Inter',sans-serif;cursor:pointer;transition:opacity .2s,transform .1s;margin-top:4px;
+    }
+    .btn:hover{opacity:.88}
+    .btn:active{transform:scale(.99)}
+    .error{
+      font-size:13px;color:var(--red);text-align:center;min-height:18px;
+      display:flex;align-items:center;justify-content:center;gap:6px;
+    }
+    .footer{font-size:11px;color:rgba(197,198,199,.3);text-align:center}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <div class="logo-area">
+      <img src="/static/pizza_club_logo.png" alt="Logo"
+           onerror="this.style.display='none';document.getElementById('txt-logo').style.display='block'"/>
+      <div id="txt-logo" style="display:none;font-size:40px">🍕</div>
+      <div class="brand">Pizza &amp; Ice Cream Club</div>
+      <div class="sub">AI · VMS · Terminal</div>
+    </div>
+
+    {% if error %}
+    <div class="error">⚠ {{ error }}</div>
+    {% endif %}
+
+    <form method="post" action="/login">
+      <div class="field" style="margin-bottom:14px">
+        <label for="username">Username</label>
+        <input id="username" name="username" type="text" placeholder="Enter username"
+               autocomplete="username" required autofocus/>
+      </div>
+      <div class="field" style="margin-bottom:8px">
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" placeholder="••••••••"
+               autocomplete="current-password" required/>
+      </div>
+      <button class="btn" type="submit">🔐 Sign In</button>
+    </form>
+  </div>
+  <div class="footer">Developed by Vexel Innovations</div>
+</div>
+</body>
+</html>
